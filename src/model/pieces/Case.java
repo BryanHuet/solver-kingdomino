@@ -2,42 +2,35 @@ package model.pieces;
 
 public class Case {
 
-    private String paysage;
-    private int couronne;
+    private Paysage paysage;
     private char symbole; // juste pour l'affichage
+    private boolean occupe;
 
     // Case vide d'une grille
     public Case(){
-        this.paysage = "";
-        this.couronne = 0;
+        this.paysage = null;
         this.symbole = '.';
+        this.occupe = false;
     }
 
     // Case construite (pour une extremité de domino/ le chateau voir autres choses si on veut)
-    public Case(String paysage, int couronne, char symbole) {
+    public Case(Paysage paysage, char symbole) {
         this.paysage = paysage;
-        this.couronne = couronne;
         this.symbole = symbole;
+        this.occupe = true;
     }
 
-    public String getPaysage() {
+    public Paysage getPaysage() {
         return paysage;
-    }
-
-    public int getCouronne() {
-        return couronne;
     }
 
     public char getSymbole() {
         return symbole;
     }
 
-    public void setCouronne(int nbCouronne) {
-        this.couronne = nbCouronne;
+    public boolean isOccuped() {
+        return occupe;
     }
 
-    public void setPaysage(String paysage) {
-        this.paysage = paysage;
-    }
 
 }

@@ -39,4 +39,5 @@ public class CsvParser {
             System.out.print("\n");
         }
     }
+
 }

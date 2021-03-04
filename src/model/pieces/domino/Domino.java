@@ -8,11 +8,13 @@ public class Domino {
     private Case extremiteDroite;
     private boolean estPoser;
     private int numeroDomino;
+    private int[] position;
 
-    public Domino(Case extremiteGauche, Case extremiteDroite, int numeroDomino) {
+    public Domino(Case extremiteGauche, Case extremiteDroite, int numeroDomino, int[] position) {
         this.extremiteGauche = extremiteGauche;
         this.extremiteDroite = extremiteDroite;
         this.numeroDomino = numeroDomino;
+        this.position = position;
         this.estPoser = false;
     }
 
@@ -28,10 +30,12 @@ public class Domino {
         return numeroDomino;
     }
 
-    public void rotate(String orientation) {
+    public int[] getPosition() { return position; }
+    public boolean estPoser() {
+        return estPoser;
     }
 
-    public void setPositions(int[] positions) {
+    public void setEstPoser(boolean etat) {
+        estPoser = etat;
     }
-
 }
