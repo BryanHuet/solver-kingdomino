@@ -1,27 +1,27 @@
-package model;
+package model.plateau;
 
-import java.util.*;
+import model.pieces.Case;
 
 public class Grille{
 
     // Attributs
     private int nbLigne;
-    private int nbCol;
+    private int nbColonne;
     private Case[][] grille;
 
     // Constructeur
     public Grille(int ligne, int col){
 
         nbLigne = ligne;
-        nbCol = col;
-        grille = new Case[nbLigne][nbCol];
+        nbColonne = col;
+        grille = new Case[nbLigne][nbColonne];
         setGrille();
     }
 
     private void setGrille() {
         for (int i = 0; i < nbLigne; i++) {
-            for (int j = 0; j < nbCol; j++) {
-                grille[i][j] = new Case(i,j);
+            for (int j = 0; j < nbColonne; j++) {
+                grille[i][j] = new Case();
             }
         }
     }
@@ -29,7 +29,7 @@ public class Grille{
     public void afficheGrille() {
         for (int i = 0; i < nbLigne; i++) {
             System.out.print("|");
-            for (int j = 0; j < nbCol; j++) {
+            for (int j = 0; j < nbColonne; j++) {
                 System.out.print(grille[i][j].getSymbole());
             }
         System.out.println("|");
@@ -40,8 +40,8 @@ public class Grille{
         return this.nbLigne;
     }
 
-    public int getNbCol() {
-        return this.nbCol;
+    public int getNbColonne() {
+        return this.nbColonne;
     }
 
 }
