@@ -28,8 +28,8 @@ public class Main{
       System.out.println(castle.getPosition()[0] + "," + castle.getPosition()[1]);
       PutCastle c = new PutCastle(grille, castle);
       c.put();
-      Domino d = DominoFactory.getDomino(4,new int[]{1,2});
-      Domino d2 = DominoFactory.getDomino(12,new int[]{2,4});
+      Domino d = DominoFactory.getDomino(2,new int[]{1,2});
+      Domino d2 = DominoFactory.getDomino(3,new int[]{0,0});
       PutDomino p = new PutDomino(grille, d, "horizontal");
       PutDomino p2 = new PutDomino(grille, d2, "horizontal");
       p.put();

@@ -43,10 +43,28 @@ public class PutDomino implements IPut {
             for (Domino d : grille.getDominos()) {
                 int dX = d.getPosition()[0];
                 int dY = d.getPosition()[1];
-                if ((dominoX == dX && dominoY == dY + 1) || (dominoX == dX-1 && dominoY == dY) ||
-                        (dominoX == dX + 1 && dominoY == dY - 1) || (dominoX == dX && dominoY == dY - 2)
-                        || (dominoX == dX - 1 && dominoY == dY -1)) {
-                    return true;
+                // Légende : Domino que l'on ajoute (côté) : extrémité du domino qu'on add sur l'extremité du domino voisin
+                // Domino à droite : extremité gauche voisine sur droite
+                if (dominoX == dX && dominoY == dY + 2) {
+                    return d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
+                }
+                // Domino à gauche : extremité droite voisine sur gauche
+                else if (dominoX == dX && dominoY == dY - 1) {
+                    return d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
+                }
+                // Domino en bas à gauche : extremité droite voisine sur gauche
+                else if (dominoX == dX - 1 && dominoY == dY - 1)
+                    return d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
+                // Domino en bas à droite : extremité gauche voisine sur droite
+                else if (dominoX == dX - 1 && dominoY == dY)
+                    return d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
+                // Domino en haut à droite : extremité gauche voisine sur droite
+                else if (dominoX == dX + 1 && dominoY == dY + 1) {
+                    return d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
+                }
+                // Domine en haut à gauche : extremité droite voisine sur gauche
+                else if (dominoX == dX - 1 && dominoY == dY) {
+                    return d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
                 }
             }
         }
@@ -69,5 +87,9 @@ public class PutDomino implements IPut {
             }
         }
         return false;
+    }
+
+    public int calculateManhattanDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x1-x2) + Math.abs(y1-y2);
     }
 }
