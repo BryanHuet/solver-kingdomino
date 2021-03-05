@@ -5,6 +5,7 @@ public class Case {
     private String symbole; // juste pour l'affichage
     private boolean occupe;
 
+
     // Case vide d'une grille
     public Case(){
         this.paysage = new Paysage("vide", 0);
@@ -30,6 +31,5 @@ public class Case {
     public boolean isOccuped() {
         return occupe;
     }
-
 
 }

@@ -3,8 +3,11 @@ package model.plateau;
 import model.pieces.Case;
 import model.pieces.Castle;
 import model.pieces.Paysage;
+import model.pieces.domino.Domino;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
+
+import java.util.HashSet;
 
 public class Grille{
 
@@ -12,7 +15,9 @@ public class Grille{
     private int nbLigne;
     private int nbColonne;
     private Case[][] grille;
+    // sauvegarde
     private Castle castle;
+    private HashSet<Domino> dominos;
 
     // Constructeur
     public Grille(int ligne, int colonne){
@@ -20,6 +25,7 @@ public class Grille{
         nbLigne = ligne;
         nbColonne = colonne;
         grille = new Case[nbLigne][nbColonne];
+        dominos = new HashSet<Domino>();
         setGrille();
     }
 
@@ -77,11 +83,33 @@ public class Grille{
     }
 
     public void setCastle(Castle castle) {
-        this.castle = castle;
+        setCase(new int[]{castle.getPosition()[0], castle.getPosition()[1]}, castle.getCase());
+        this.castle = castle; // save
     }
 
     public Castle getCastle() {
+        if (castle != null) {
+            return castle;
+        }
+        else {
+            System.out.println("Attention ! aucun château n'existait, un a été mis par défaut au milieu de la grille.");
+            setCastle(new Castle(new int[]{(int) nbLigne/2, (int) nbColonne / 2}));
+        }
         return castle;
+    }
+
+    public void setDomino(Domino d) {
+        dominos.add(d);
+        grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteDroite();
+        grille[d.getPosition()[0]][d.getPosition()[1] - 1] = d.getExtremiteGauche();
+    }
+
+    public void removeDomino(Domino d) {
+        dominos.remove(d);
+    }
+
+    public HashSet<Domino> getDominos() {
+        return dominos;
     }
 
 }

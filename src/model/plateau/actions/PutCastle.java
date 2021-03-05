@@ -18,9 +18,9 @@ public class PutCastle implements IPut {
         int indexX = castle.getPosition()[0];
         int indexY = castle.getPosition()[1];
 
-
-            grille.setCase(castle.getPosition(), castle);
-            grille.setCastle(castle); // on garde en mémoire la chateau
+        if (isValid()) {
+            grille.setCastle(castle); // set la case du Chateau + on garde en mémoire la chateau
+        }
     }
 
     // Pas besoin de vérifier si un domino est présent, le chateau est la première pièce.
