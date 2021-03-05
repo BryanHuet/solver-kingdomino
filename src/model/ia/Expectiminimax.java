@@ -34,7 +34,7 @@ public class Expectiminimax {
     }
 
     public float proba(Node node) {
-
+/*
         switch (node.getState()) {
             case "champ":
                 return 26 / node.getState().getDeck();
@@ -51,7 +51,8 @@ public class Expectiminimax {
 
             default:
                 return (float) 0.0;
-        }
+                }*/
+        return 0;
     }
 }
 
