@@ -98,10 +98,17 @@ public class Grille{
         return castle;
     }
 
-    public void setDomino(Domino d) {
+    public void setDomino(Domino d, String orientation) {
         dominos.add(d);
-        grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteDroite();
-        grille[d.getPosition()[0]][d.getPosition()[1] - 1] = d.getExtremiteGauche();
+
+        if (orientation.equals("horizontal") || orientation.equals("horizontalReversed")) {
+            grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteDroite();
+            grille[d.getPosition()[0]][d.getPosition()[1] - 1] = d.getExtremiteGauche();
+        } else if (orientation.equals("vertical") || orientation.equals("verticalReversed")) {
+            grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteDroite();
+            grille[d.getPosition()[0] - 1][d.getPosition()[1]] = d.getExtremiteGauche();
+        }
+
         d.setEstPoser(true);
     }
 

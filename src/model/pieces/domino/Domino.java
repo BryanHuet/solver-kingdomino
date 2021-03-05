@@ -48,7 +48,8 @@ public class Domino {
     }
 
     public void reverseExtremite() {
-        this.extremiteGauche = extremiteDroite;
+        Case tmp = extremiteDroite;
         this.extremiteDroite = extremiteGauche;
+        this.extremiteGauche = tmp;
     }
 }

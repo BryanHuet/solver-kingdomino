@@ -23,7 +23,7 @@ public class PutDomino implements IPut {
     @Override
     public void put() {
         if (isValid()) {
-            grille.setDomino(domino);
+            grille.setDomino(domino, orientation);
         }else System.out.println("Domino invalide");
     }
 
@@ -78,8 +78,37 @@ public class PutDomino implements IPut {
                     else if (dominoX == dX - 1 && dominoY == dY - 1) {
                         identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
                     }
+                } else if (orientation.equals("vertical") || orientation.equals("verticalReversed")) {
+                    // Domino à droite et à gauche : voisin à 2 extrémités
+                    if ((dominoX == dX && dominoY == dY - 1) || (dominoX == dX && dominoY == dY + 1)) {
+                        boolean check = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
+                        boolean check2 = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
+                        identicPaysage = (check || check2);
+                    }
+                    // Domino en haut à gauche : extremité droite voisine sur gauche
+                    else if (dominoX == dX - 1 && dominoY == dY - 1) {
+                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
+                    }
+                    // Domino en bas à gauche : extremité gauche voisine sur droite
+                    else if (dominoX == dX + 1 && dominoY == dY - 1) {
+                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
+                    }
+                    // Domino en haut à droite : extremité droite voisine sur gauche
+                    else if (dominoX == dX - 1 && dominoY == dY + 1)
+                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
+                        // Domino en bas à droite : extremité gauche voisine sur droite
+                    else if (dominoX == dX + 1 && dominoY == dY + 1)
+                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
+                        // Domino en haut : extremité droite sur gauche
+                    else if (dominoX == dX - 2 && dominoY == dY) {
+                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
+                    }
+                    // Domine en bas : extremité gauche sur droite
+                    else if (dominoX == dX + 2 && dominoY == dY) {
+                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
+                    }
                 }
-            } // TODO else if (orientation.equals("vertical") || orientation.equals("verticalReversed"))
+            }
         }
         return identicPaysage;
     }

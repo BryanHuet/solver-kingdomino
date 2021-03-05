@@ -21,6 +21,7 @@ public class Main{
 
        */
 
+      /* Test horizontal
       // Grille et chateau
       Grille grille = new Grille(5,5);
       Castle castle = new Castle(new int[]{2,2});
@@ -46,5 +47,35 @@ public class Main{
       System.out.println("Avec le domino n3 (même paysage en haut) ------------------");
       p3.put();
       grille.afficheGrille();
+
+       */
+
+      // Grille et chateau
+      Grille grille = new Grille(5,5);
+      Castle castle = new Castle(new int[]{2,2});
+      PutCastle c = new PutCastle(grille, castle);
+      c.put();
+      grille.afficheGrille();
+      System.out.println("-------------------------");
+
+      Domino d = DominoFactory.getDomino(30,new int[]{1,2});
+      PutDomino p = new PutDomino(grille, d, "verticalReversed");
+      p.put();
+
+      /*
+      Domino d2 = DominoFactory.getDomino(30 ,new int[]{1,3});
+      PutDomino p2 = new PutDomino(grille, d2, "verticalReversed");
+
+       */
+
+      Domino d2 = DominoFactory.getDomino(30 ,new int[]{2,3});
+      PutDomino p2 = new PutDomino(grille, d2, "vertical");
+      p.put();
+      grille.afficheGrille();
+
+      System.out.println("--------------------------");
+      p2.put();
+      grille.afficheGrille();
+
   }
 }
