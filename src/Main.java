@@ -21,21 +21,30 @@ public class Main{
 
        */
 
+      // Grille et chateau
       Grille grille = new Grille(5,5);
-      grille.afficheGrille();
-      System.out.println("-------------------------");
       Castle castle = new Castle(new int[]{2,2});
-      System.out.println(castle.getPosition()[0] + "," + castle.getPosition()[1]);
       PutCastle c = new PutCastle(grille, castle);
       c.put();
+      grille.afficheGrille();
+      System.out.println("-------------------------");
+
+      // Domino
       Domino d = DominoFactory.getDomino(2,new int[]{1,2});
-      Domino d2 = DominoFactory.getDomino(3,new int[]{0,0});
+      Domino d2 = DominoFactory.getDomino(7,new int[]{2,4});
+      Domino d3 = DominoFactory.getDomino(3,new int[]{0,1});
+      // Actions
       PutDomino p = new PutDomino(grille, d, "horizontal");
       PutDomino p2 = new PutDomino(grille, d2, "horizontal");
+      PutDomino p3 = new PutDomino(grille, d3, "horizontal");
+
+      // On met et affiche au fur et à mesure
       p.put();
       grille.afficheGrille();
       System.out.println("Avec le domino n2 ------------------");
       p2.put();
+      System.out.println("Avec le domino n3 (même paysage en haut) ------------------");
+      p3.put();
       grille.afficheGrille();
   }
 }
