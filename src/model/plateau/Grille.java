@@ -76,7 +76,7 @@ public class Grille{
     }
 
     public boolean isOutofBound(int x, int y) {
-        if (x < 0 || x >= nbLigne -1 || y < 0 || y >= nbColonne - 1) {
+        if (x < 0 || x > nbLigne -1 || y < 0 || y > nbColonne - 1) {
             return true;
         }
         return false;

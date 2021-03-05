@@ -34,6 +34,8 @@ public class PutDomino implements IPut {
         return false;
     }
 
+    // TODO Vérification du paysage adjacent (qui doit être identique) et gestion des orientations.
+
     public boolean isDominoAdjacent() {
         int dominoX = domino.getPosition()[0];
         int dominoY = domino.getPosition()[1];
@@ -54,12 +56,15 @@ public class PutDomino implements IPut {
     public boolean isCastleAdjacent() {
         Castle castle = grille.getCastle();
         // index Domino et castle
-        int indexX = domino.getPosition()[0];
-        int indexY = domino.getPosition()[1];
-        int castleX = castle.getPosition()[0];
-        int castleY = castle.getPosition()[1];
-        if (!grille.isOutofBound(indexX, indexY) && !grille.isOutofBound(castleX, castleY)) {
-            if (castleX - 1 == indexX || castleX + 1 == indexX || castleY - 1 == indexY || castleY - 1 == indexY) {
+        int dX = domino.getPosition()[0];
+        int dY = domino.getPosition()[1];
+        int cX = castle.getPosition()[0];
+        int cY = castle.getPosition()[1];
+
+        if (!grille.isOutofBound(dX, dY) && !grille.isOutofBound(cX, cY)) {
+            if ((cX - 1 == dX && cY == dY) || (cX + 1 == dX && cY + 1 == dY) || (cX == dX && cY + 2 == dY) ||
+                    (cX + 1 == dX && cY + 1 == dY) || (cX + 1 == dX && cY == dY) || (cX == dX && cY - 1 == dY))
+            {
                 return true;
             }
         }

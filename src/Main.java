@@ -24,12 +24,12 @@ public class Main{
       Grille grille = new Grille(5,5);
       grille.afficheGrille();
       System.out.println("-------------------------");
-      Castle castle = new Castle(new int[]{-33,2});
+      Castle castle = new Castle(new int[]{2,2});
       System.out.println(castle.getPosition()[0] + "," + castle.getPosition()[1]);
       PutCastle c = new PutCastle(grille, castle);
       c.put();
       Domino d = DominoFactory.getDomino(4,new int[]{1,2});
-      Domino d2 = DominoFactory.getDomino(12,new int[]{0,2});
+      Domino d2 = DominoFactory.getDomino(12,new int[]{2,4});
       PutDomino p = new PutDomino(grille, d, "horizontal");
       PutDomino p2 = new PutDomino(grille, d2, "horizontal");
       p.put();
