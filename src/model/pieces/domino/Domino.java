@@ -38,4 +38,8 @@ public class Domino {
     public void setEstPoser(boolean etat) {
         estPoser = etat;
     }
+
+    public String toString(){
+        return ""+numeroDomino;
+    }
 }

@@ -48,11 +48,10 @@ public class Expectiminimax {
                 return 10 / node.getState().getDeck();
             case "mine":
                 return 6 / node.getState().getDeck();
-
             default:
                 return (float) 0.0;
                 }*/
-        return 0;
+        return 0.5F;
     }
 }
 
