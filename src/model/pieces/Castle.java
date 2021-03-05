@@ -5,7 +5,7 @@ public class Castle extends Case {
     private int[] position;
 
     public Castle(int[] position) {
-        super(new Paysage("castle", 0), 'c');
+        super(new Paysage("castle", 0), "c");
         this.position = position;
     }
 

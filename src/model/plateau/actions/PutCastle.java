@@ -13,24 +13,22 @@ public class PutCastle implements IPut {
         this.castle = castle;
     }
 
-
     @Override
     public void put() {
         int indexX = castle.getPosition()[0];
         int indexY = castle.getPosition()[1];
 
-        if (isValid()) {
+
             grille.setCase(castle.getPosition(), castle);
-        }
+            grille.setCastle(castle); // on garde en mémoire la chateau
     }
 
+    // Pas besoin de vérifier si un domino est présent, le chateau est la première pièce.
     @Override
     public boolean isValid() {
-        try {
-            return !grille.getGrille()[castle.getPosition()[0]][castle.getPosition()[1]].isOccuped();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Castle avec une position invalide" + e.getMessage());
-        }
-        return false;
+        return !grille.isOutofBound(castle.getPosition()[0],castle.getPosition()[1]);
     }
+
+
+
 }
