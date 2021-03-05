@@ -46,4 +46,9 @@ public class Domino {
     public String toString(){
         return ""+numeroDomino;
     }
+
+    public void reverseExtremite() {
+        this.extremiteGauche = extremiteDroite;
+        this.extremiteDroite = extremiteGauche;
+    }
 }

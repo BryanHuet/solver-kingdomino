@@ -102,6 +102,7 @@ public class Grille{
         dominos.add(d);
         grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteDroite();
         grille[d.getPosition()[0]][d.getPosition()[1] - 1] = d.getExtremiteGauche();
+        d.setEstPoser(true);
     }
 
     public void removeDomino(Domino d) {
