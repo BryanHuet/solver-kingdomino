@@ -1,5 +1,4 @@
 package model.pieces;
-
 public class Case {
 
     private Paysage paysage;

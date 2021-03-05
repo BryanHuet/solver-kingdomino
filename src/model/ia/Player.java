@@ -7,4 +7,6 @@ public class Player {
         this.id = id;
     }
 
+    public void getPlateau() {
+    }
 }

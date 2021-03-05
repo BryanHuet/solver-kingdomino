@@ -39,6 +39,10 @@ public class Domino {
         estPoser = etat;
     }
 
+    public void setPosition(int[] position) {
+        this.position = position;
+    }
+
     public String toString(){
         return ""+numeroDomino;
     }
