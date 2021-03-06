@@ -71,6 +71,8 @@ public class Grille{
         return grille[position[0]][position[1]];
     }
 
+    public Case getCaseBis(int x, int y) { return grille[x][y]; }
+
     public String getPaysageName(int x, int y) {
         return grille[x][y].getPaysage().getName();
     }

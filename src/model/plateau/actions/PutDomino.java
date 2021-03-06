@@ -29,106 +29,83 @@ public class PutDomino implements IPut {
 
     @Override
     public boolean isValid() {
-        if (isDominoAdjacent() || isCastleAdjacent()) {
+        if ((isDominoAdjacent() && dominoIsNotColliding())) {
             return true;
         }
         return false;
     }
 
-    // TODO Vérification du paysage adjacent (qui doit être identique) et gestion des orientations.
-
     public boolean isDominoAdjacent() {
-        int dominoX = domino.getPosition()[0];
-        int dominoY = domino.getPosition()[1];
-        boolean identicPaysage = false;
-
-        if (grille.getDominos().size() > 0) {
-            for (Domino d : grille.getDominos()) {
-                int dX = d.getPosition()[0];
-                int dY = d.getPosition()[1];
-                // Légende : Domino que l'on ajoute (côté) : extrémité du domino qu'on add sur l'extremité du domino voisin
-                // Priorité à ses 2 if (cas haut et cas bas) donc 2 extremités avec des paysage identiques possible
-                // Domino en haut/bas : contact des 2 extrémités respectives sur les 2 respectives (gauche gauche, droite droite)
-
-                if (orientation.equals("horizontal") || orientation.equals("horizontalReversed")) {
-                    if ((dominoX == dX + 1 && dominoY == dY) || (dominoX == dX - 1 && dominoY == dY)) {
-                        boolean check = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                        boolean check2 = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                        identicPaysage = (check || check2);
-                    }
-                    // Domino à droite : extremité gauche voisine sur droite
-                    else if (dominoX == dX && dominoY == dY + 2) {
-                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                    }
-                    // Domino à gauche : extremité droite voisine sur gauche
-                    else if (dominoX == dX && dominoY == dY - 2) {
-                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                    }
-                    // Domino en bas à gauche : extremité droite voisine sur gauche
-                    else if (dominoX == dX + 1 && dominoY == dY - 1)
-                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                        // Domino en bas à droite : extremité gauche voisine sur droite
-                    else if (dominoX == dX + 1 && dominoY == dY + 1)
-                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                        // Domino en haut à droite : extremité gauche voisine sur droite
-                    else if (dominoX == dX + 1 && dominoY == dY + 1) {
-                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                    }
-                    // Domine en haut à gauche : extremité droite voisine sur gauche
-                    else if (dominoX == dX - 1 && dominoY == dY - 1) {
-                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                    }
-                } else if (orientation.equals("vertical") || orientation.equals("verticalReversed")) {
-                    // Domino à droite et à gauche : voisin à 2 extrémités
-                    if ((dominoX == dX && dominoY == dY - 1) || (dominoX == dX && dominoY == dY + 1)) {
-                        boolean check = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                        boolean check2 = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                        identicPaysage = (check || check2);
-                    }
-                    // Domino en haut à gauche : extremité droite voisine sur gauche
-                    else if (dominoX == dX - 1 && dominoY == dY - 1) {
-                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                    }
-                    // Domino en bas à gauche : extremité gauche voisine sur droite
-                    else if (dominoX == dX + 1 && dominoY == dY - 1) {
-                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                    }
-                    // Domino en haut à droite : extremité droite voisine sur gauche
-                    else if (dominoX == dX - 1 && dominoY == dY + 1)
-                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                        // Domino en bas à droite : extremité gauche voisine sur droite
-                    else if (dominoX == dX + 1 && dominoY == dY + 1)
-                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                        // Domino en haut : extremité droite sur gauche
-                    else if (dominoX == dX - 2 && dominoY == dY) {
-                        identicPaysage = d.getExtremiteGauche().getPaysage().getName().equals(domino.getExtremiteDroite().getPaysage().getName());
-                    }
-                    // Domine en bas : extremité gauche sur droite
-                    else if (dominoX == dX + 2 && dominoY == dY) {
-                        identicPaysage = d.getExtremiteDroite().getPaysage().getName().equals(domino.getExtremiteGauche().getPaysage().getName());
-                    }
-                }
-            }
-        }
-        return identicPaysage;
+        HashSet<Case> voisins = verifyAdjacence();
+        return voisins.size() > 0;
     }
 
-    public boolean isCastleAdjacent() {
-        Castle castle = grille.getCastle();
-        // index Domino et castle
+    // Vérifie l'adjacence avec une case de domino avec paysage identique ou d'un chateau.
+    public HashSet<Case> verifyAdjacence() {
+
         int dX = domino.getPosition()[0];
         int dY = domino.getPosition()[1];
-        int cX = castle.getPosition()[0];
-        int cY = castle.getPosition()[1];
 
-        if (!grille.isOutofBound(dX, dY) && !grille.isOutofBound(cX, cY)) {
-            if ((cX - 1 == dX && cY == dY) || (cX + 1 == dX && cY + 1 == dY) || (cX == dX && cY + 2 == dY) ||
-                    (cX + 1 == dX && cY + 1 == dY) || (cX + 1 == dX && cY == dY) || (cX == dX && cY - 1 == dY))
-            {
-                return true;
+        HashSet<Case> casesVoisine = new HashSet<>();
+
+        switch (orientation)
+        {
+            case "horizontal":
+            case "horizontalReversed":
+                searchAdjacence(dX, dY, casesVoisine, domino.getExtremiteDroite().getPaysage().getName());
+                searchAdjacence(dX, dY - 1, casesVoisine, domino.getExtremiteGauche().getPaysage().getName());
+                break;
+            case "vertical":
+            case "verticalReversed":
+                searchAdjacence(dX, dY, casesVoisine, domino.getExtremiteDroite().getPaysage().getName());
+                searchAdjacence(dX-1, dY, casesVoisine, domino.getExtremiteGauche().getPaysage().getName());
+        }
+
+        return casesVoisine;
+        }
+
+    public void searchAdjacence(int dX, int dY, HashSet<Case> casesVoisine, String dominoName) {
+
+        if (!grille.isOutofBound(dX - 1,dY) && dominoIsNotColliding()) {
+            if (grille.getCaseBis(dX-1,dY).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX-1,dY).getPaysage().getName().equals("castle")) {
+                casesVoisine.add(grille.getCaseBis(dX-1,dY));
             }
         }
-        return false;
+        if (!grille.isOutofBound(dX + 1,dY) && dominoIsNotColliding()) {
+            if (grille.getCaseBis(dX+1,dY).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX+1,dY).getPaysage().getName().equals("castle")) {
+                casesVoisine.add(grille.getCaseBis(dX + 1,dY));
+            }
+        }
+        if (!grille.isOutofBound(dX,dY - 1) && dominoIsNotColliding()) {
+            if (grille.getCaseBis(dX,dY - 1).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX,dY-1).getPaysage().getName().equals("castle")) {
+                casesVoisine.add(grille.getCaseBis(dX,dY - 1));
+            }
+        }
+        if (!grille.isOutofBound(dX,dY + 1) && dominoIsNotColliding()) {
+            if (grille.getCaseBis(dX,dY + 1).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX,dY+1).getPaysage().getName().equals("castle")) {
+                casesVoisine.add(grille.getCaseBis(dX,dY + 1));
+            }
+        }
+    }
+
+    public boolean dominoIsNotColliding() {
+        int dX = domino.getPosition()[0];
+        int dY = domino.getPosition()[1];
+
+        switch (orientation) {
+            case "horizontal":
+            case "horizontalReversed":
+                if (!grille.isOutofBound(dX,dY) && !grille.isOutofBound(dX,dY-1))
+                    return !grille.getCase(domino.getPosition()).isOccuped() && !grille.getCase(new int[]{dX,dY-1}).isOccuped();
+                return false;
+            case "vertical":
+            case "verticalReversed":
+                if (!grille.isOutofBound(dX,dY) && !grille.isOutofBound(dX - 1,dY))
+                    return !grille.getCase(domino.getPosition()).isOccuped() && !grille.getCase(new int[]{dX-1,dY}).isOccuped();
+                return false;
+            default:
+                return false;
+        }
     }
 
     public void adaptOrientation() {
