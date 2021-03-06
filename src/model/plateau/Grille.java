@@ -39,11 +39,10 @@ public class Grille{
 
     public void afficheGrille() {
         for (int i = 0; i < nbLigne; i++) {
-            System.out.print("|");
             for (int j = 0; j < nbColonne; j++) {
-                System.out.print(grille[i][j].getSymbole());
+                System.out.print("|" + grille[i][j].getSymbole() + "|");
             }
-        System.out.println("|");
+        System.out.println("");
         }
     }
 

@@ -9,7 +9,7 @@ public class Case {
     // Case vide d'une grille
     public Case(){
         this.paysage = new Paysage("vide", 0);
-        this.symbole = ".";
+        this.symbole = "___";
         this.occupe = false;
     }
 

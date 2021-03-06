@@ -7,7 +7,7 @@ public class Castle {
 
     public Castle(int[] position) {
         this.position = position;
-        this.caseDuChateau = new Case(new Paysage("castle", 0),"c");
+        this.caseDuChateau = new Case(new Paysage("castle", 0),"cas");
     }
 
     public int[] getPosition() {

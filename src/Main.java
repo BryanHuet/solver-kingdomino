@@ -68,12 +68,20 @@ public class Main{
 
        */
 
-      Domino d2 = DominoFactory.getDomino(30 ,new int[]{0,1});
-      PutDomino p2 = new PutDomino(grille, d2, "horizontalReversed");
+      Domino d2 = DominoFactory.getDomino(20 ,new int[]{4,2});
+      PutDomino p2 = new PutDomino(grille, d2, "vertical");
+      grille.afficheGrille();
+
+      Domino d3 = DominoFactory.getDomino(30 ,new int[]{1,4});
+      PutDomino p3 = new PutDomino(grille, d3, "horizontal");
       grille.afficheGrille();
 
       System.out.println("--------------------------");
       p2.put();
+      grille.afficheGrille();
+
+      System.out.println("--------------------------");
+      p3.put();
       grille.afficheGrille();
 
   }
