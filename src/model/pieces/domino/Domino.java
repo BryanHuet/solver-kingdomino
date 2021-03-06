@@ -38,4 +38,18 @@ public class Domino {
     public void setEstPoser(boolean etat) {
         estPoser = etat;
     }
+
+    public void setPosition(int[] position) {
+        this.position = position;
+    }
+
+    public String toString(){
+        return ""+numeroDomino;
+    }
+
+    public void reverseExtremite() {
+        Case tmp = extremiteDroite;
+        this.extremiteDroite = extremiteGauche;
+        this.extremiteGauche = tmp;
+    }
 }

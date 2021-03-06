@@ -1,10 +1,10 @@
 package model.pieces;
-
 public class Case {
 
     private Paysage paysage;
     private String symbole; // juste pour l'affichage
     private boolean occupe;
+
 
     // Case vide d'une grille
     public Case(){
@@ -31,6 +31,5 @@ public class Case {
     public boolean isOccuped() {
         return occupe;
     }
-
 
 }
