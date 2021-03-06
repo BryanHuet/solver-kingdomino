@@ -1,5 +1,7 @@
 package model.pieces;
 
+import java.util.Objects;
+
 public class Paysage {
 
     private String name;

@@ -1,4 +1,7 @@
 package model.ia;
+import model.Player;
+import model.plateau.actions.PutDomino;
+
 import java.lang.*;
 
 public class Expectiminimax {
@@ -34,24 +37,25 @@ public class Expectiminimax {
     }
 
     public float proba(Node node) {
-/*
-        switch (node.getState()) {
-            case "champ":
-                return 26 / node.getState().getDeck();
-            case "foret":
-                return 22 / node.getState().getDeck();
-            case "eau":
-                return 18 / node.getState().getDeck();
-            case "herbe":
-                return 14 / node.getState().getDeck();
-            case "marais":
-                return 10 / node.getState().getDeck();
+        /*
+        switch (((PutDomino) node.getState().getGame().getCurrentPlayer().getLast()).getDomino().getExtremiteDroite().getPaysage().getName()) {
+            case "wheat":
+                return (float) node.getState().getGame().getDeck().getRemainingCase().get("wheat") / node.getState().getGame().getDeck().getSize();
+            case "forest":
+                return (float) node.getState().getGame().getDeck().getRemainingCase().get("forest") / node.getState().getGame().getDeck().getSize();
+            case "water":
+                return (float) node.getState().getGame().getDeck().getRemainingCase().get("water") / node.getState().getGame().getDeck().getSize();
+            case "grass":
+                return (float) node.getState().getGame().getDeck().getRemainingCase().get("grass") / node.getState().getGame().getDeck().getSize();
+            case "swamp":
+                return (float) node.getState().getGame().getDeck().getRemainingCase().get("swamp") / node.getState().getGame().getDeck().getSize();
             case "mine":
-                return 6 / node.getState().getDeck();
+                return (float) node.getState().getGame().getDeck().getRemainingCase().get("mine") / node.getState().getGame().getDeck().getSize();
             default:
                 return (float) 0.0;
-                }*/
-        return 0.5F;
+        }
+        */
+        return 0.0F;
     }
 }
 

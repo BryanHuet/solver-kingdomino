@@ -44,7 +44,10 @@ public class Domino {
     }
 
     public String toString(){
-        return ""+numeroDomino;
+        return "[" +this.getExtremiteGauche().getPaysage().getName() + " "+
+                this.getExtremiteGauche().getPaysage().getNbCouronnes() +
+                "|" + this.getExtremiteDroite().getPaysage().getName() + " " +
+                 this.getExtremiteDroite().getPaysage().getNbCouronnes() +"]";
     }
 
     public void reverseExtremite() {

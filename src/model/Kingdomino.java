@@ -4,6 +4,8 @@ import model.Player;
 import model.pieces.Castle;
 import model.pieces.domino.Domino;
 import model.pieces.domino.DominoFactory;
+import model.plateau.Deck;
+import model.plateau.Score;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
 
@@ -11,18 +13,17 @@ import java.util.*;
 
 public class Kingdomino {
 
-    private ArrayList<Domino> deck;
+    private Deck deck;
     private HashSet<Player> players;
     private ArrayList<Domino> pick;
     private boolean terminate=false;
+    private Player currentPlayer;
 
     public Kingdomino(){
-        this.deck = new ArrayList<>();
+        this.deck = new Deck(48);
         this.players = new HashSet<>();
         this.pick = new ArrayList<>();
-        for(int i=0; i<48; i++){
-            this.deck.add(DominoFactory.getDomino(i,new int []{0,0}));
-        }
+
 
     }
 
@@ -30,15 +31,16 @@ public class Kingdomino {
         for(int i = 0;i<this.players.size();i++){
             Random random = new Random();
             int nb;
-            nb = random.nextInt(this.deck.size());
-            this.pick.add(this.deck.get(nb));
-            this.deck.remove(nb);
+            nb = random.nextInt(this.deck.getDeck().size());
+            this.pick.add(this.deck.getDeck().get(nb));
+            this.deck.getDeck().remove(nb);
         }
     }
 
     public void start(){
         System.out.println("Debut du jeu");
         for(Player p : this.players){
+            this.currentPlayer=p;
             System.out.println("Veuillez placer votre chateau 22 pour x=2 et y=2");
             Scanner myObj = new Scanner(System.in);
             String position = myObj.nextLine();
@@ -50,17 +52,17 @@ public class Kingdomino {
         int n=1;
         while(! this.terminate){
             System.out.println("============= TOUR "+n+" ==================");
-            if (this.deck.size()==0){
+            if (this.deck.getDeck().size()==0){
                 this.terminate = true;
             }
             System.out.println("Tirage de la pioches");
             pick();
-            System.out.println("supprimer "+ this.deck.size());
             for(Domino d : this.pick){
                 System.out.println(d);
             }
 
             for(Player p : this.players){
+                this.currentPlayer=p;
                 System.out.println("Veuillez choisir un domino 0 ou 1");
                 Scanner myObj = new Scanner(System.in);
                 int idDomino = myObj.nextInt();
@@ -71,9 +73,10 @@ public class Kingdomino {
                 chosen.setPosition(new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
 
                 PutDomino pu = new PutDomino(p.getPlateau(),chosen,position.charAt(2)=='h'? "horizontal":"vertical");
-                pu.put();
+                p.play(pu);
 
                 p.getPlateau().afficheGrille();
+                System.out.println("Votre score est de :"+ Score.calculateScore(p.getPlateau()));
 
             }
             this.pick.clear();
@@ -83,13 +86,15 @@ public class Kingdomino {
         }
     }
 
-    public ArrayList<Domino> getDeck() {
-        return this.deck;
+    public Deck getDeck() {
+        return this.getDeck();
     }
     public void addPlayer(Player player){
         players.add(player);
     }
     public ArrayList<Domino> getPick() { return this.pick; }
+    public HashSet<Player> getPlayers() { return players; }
+    public Player getCurrentPlayer() { return currentPlayer; }
 
     public static void main(String[] args){
 
@@ -97,7 +102,7 @@ public class Kingdomino {
         Player one = new Player(1);
         Player two = new Player(2);
         game.addPlayer(one);
-        game.addPlayer(two);
+        //game.addPlayer(two);
         game.start();
     }
 

@@ -1,6 +1,7 @@
 package model;
 
 import model.plateau.Grille;
+import model.plateau.Score;
 import model.plateau.actions.IPut;
 
 import java.util.HashSet;
@@ -10,11 +11,11 @@ public class Player {
     private int id;
     private int score;
     private Grille plateau;
+    private IPut last;
 
     public Player(int id){
         this.id = id;
         this.plateau = new Grille(5,5);
-        this.score = 0;
     }
 
     public int getId() {
@@ -35,6 +36,14 @@ public class Player {
 
     public void play(IPut action){
         action.put();
+        this.last=action;
     }
 
+    public int getScore() {
+        return Score.calculateScore(this.getPlateau());
+    }
+
+    public IPut getLast() {
+        return this.last;
+    }
 }

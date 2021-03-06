@@ -1,5 +1,7 @@
 package model.ia;
 
+import model.Player;
+
 import java.util.HashSet;
 
 public class Node {
@@ -11,7 +13,7 @@ public class Node {
 
     // private int depth;
 
-    public Node(Player player, State state,int heuristic){
+    public Node(Player player, State state, int heuristic){
         this.player = player;
         this.state = state;
         this.heuristic = heuristic;
