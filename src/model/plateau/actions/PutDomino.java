@@ -68,7 +68,7 @@ public class PutDomino implements IPut {
         int cX = castle.getPosition()[0];
         int cY = castle.getPosition()[1];
 
-        if (!grille.isOutofBound(dX, dY) && !grille.isOutofBound(cX, cY)) {
+        if (dominoIsNotColliding() && !grille.isOutofBound(cX, cY)) {
             if ((cX - 1 == dX && cY == dY) || (cX + 1 == dX && cY + 1 == dY) || (cX == dX && cY + 2 == dY) ||
                     (cX + 1 == dX && cY + 1 == dY) || (cX + 1 == dX && cY == dY) || (cX == dX && cY - 1 == dY))
             {
