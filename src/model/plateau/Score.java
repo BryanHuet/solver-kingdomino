@@ -4,6 +4,7 @@ import model.pieces.Case;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Score {
 
@@ -36,5 +37,30 @@ public class Score {
             }
         }
         return scoreCounter;
+    }
+
+    public static String getTheMostPaysage(Grille grille){
+        HashMap<String, Integer> paysageCounter = new HashMap<>();
+        for (int i = 0; i < grille.getNbLigne(); i++) {
+            for (int j = 0; j < grille.getNbColonne(); j++) {
+                paysageCounter.put(grille.getGrille()[i][j].getPaysage().getName(),0);
+            }
+        }
+        for (int i = 0; i < grille.getNbLigne(); i++) {
+            for (int j = 0; j < grille.getNbColonne(); j++) {
+                paysageCounter.put(grille.getGrille()[i][j].getPaysage().getName(),paysageCounter.get(grille.getGrille()[i][j].getPaysage().getName())+1);
+            }
+        }
+        String most="null";
+        int plus=0;
+        for (Map.Entry<String, Integer> entry : paysageCounter.entrySet()) {
+            if(!entry.getKey().equals("vide")){
+                if(entry.getValue()>plus){
+                    plus=entry.getValue();
+                    most=entry.getKey();
+                }
+            }
+        }
+        return most;
     }
 }

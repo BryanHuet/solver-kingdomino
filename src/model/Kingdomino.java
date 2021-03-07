@@ -6,6 +6,7 @@ import model.pieces.domino.Domino;
 import model.pieces.domino.DominoFactory;
 import model.plateau.Deck;
 import model.plateau.Score;
+import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
 
@@ -68,11 +69,13 @@ public class Kingdomino {
                 int idDomino = myObj.nextInt();
                 Domino chosen = this.pick.get(idDomino);
                 System.out.println("Veuillez placez votre domino 22h pour x=2 et y=2 et orientation = h ou v");
+                for (IPut action: p.actionsPossible(this.pick)){
+                    System.out.println(action);
+                }
                 Scanner myObj2 = new Scanner(System.in);
                 String position = myObj2.nextLine();
-                chosen.setPosition(new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
 
-                PutDomino pu = new PutDomino(p.getPlateau(),chosen,position.charAt(2)=='h'? "horizontal":"vertical");
+                PutDomino pu = new PutDomino(p.getPlateau(),chosen,position.charAt(2)=='h'? "horizontal":"vertical",new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
                 p.play(pu);
 
                 p.getPlateau().afficheGrille();
@@ -100,9 +103,9 @@ public class Kingdomino {
 
         Kingdomino game = new Kingdomino();
         Player one = new Player(1);
-        Player two = new Player(2);
+        Player two = new Robot(2);
         game.addPlayer(one);
-        //game.addPlayer(two);
+        game.addPlayer(two);
         game.start();
     }
 

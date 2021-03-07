@@ -44,12 +44,4 @@ public class Deck {
         }
     }
 
-    public static void main(String[] args){
-        Deck d = new Deck(48);
-        for (Map.Entry<String, Integer> entry : d.getRemainingCase().entrySet()) {
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-        }
-    }
-
-
 }

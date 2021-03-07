@@ -10,11 +10,8 @@ public class State {
 
     private Kingdomino game;
 
-    private HashSet<IPut> coupPossibles;
-
     public State(Kingdomino game){
         this.game=game;
-        this.coupPossibles=new HashSet<>();
     }
     public Kingdomino getGame() { return game; }
 

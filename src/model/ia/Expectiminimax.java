@@ -1,6 +1,6 @@
 package model.ia;
 import model.Player;
-import model.plateau.actions.PutDomino;
+import model.plateau.Score;
 
 import java.lang.*;
 
@@ -12,7 +12,8 @@ public class Expectiminimax {
         this.player=player;
     }
 
-    public float test(Node node,int depth){
+
+    public float calcul(Node node, int depth){
         float a;
         if(node.getChild().isEmpty() || depth == 0){
             return node.getHeuristic();
@@ -20,25 +21,25 @@ public class Expectiminimax {
         if(node.getPlayer()!=this.player){
             a=1000000000;
             for(Node child: node.getChild()) {
-                a = Math.min(a, test(child, depth-1));
+                a = Math.min(a, calcul(child, depth-1));
             }
         }else if(node.getPlayer()==this.player){
             a=-1000000000;
             for(Node child: node.getChild()) {
-                a = Math.max(a, test(child, depth-1));
+                a = Math.max(a, calcul(child, depth-1));
             }
         }else{
             a = 0;
             for(Node child: node.getChild()) {
-                a += proba(child)*test(child,depth-1);
+                a += proba(child)* calcul(child,depth-1);
             }
         }
         return a;
     }
 
     public float proba(Node node) {
-        /*
-        switch (((PutDomino) node.getState().getGame().getCurrentPlayer().getLast()).getDomino().getExtremiteDroite().getPaysage().getName()) {
+
+        switch (Score.getTheMostPaysage(node.getPlayer().getPlateau())) {
             case "wheat":
                 return (float) node.getState().getGame().getDeck().getRemainingCase().get("wheat") / node.getState().getGame().getDeck().getSize();
             case "forest":
@@ -54,8 +55,7 @@ public class Expectiminimax {
             default:
                 return (float) 0.0;
         }
-        */
-        return 0.0F;
+
     }
 }
 

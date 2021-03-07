@@ -12,17 +12,20 @@ public class PutDomino implements IPut {
     private Grille grille;
     private Domino domino;
     private String orientation;
+    private int[] position;
 
-    public PutDomino(Grille grille, Domino domino, String orientation) {
+    public PutDomino(Grille grille, Domino domino, String orientation, int[] position) {
         this.grille = grille;
         this.domino = domino;
         this.orientation = orientation;
+        this.position=position;
         adaptOrientation(); // On adapte les extremités du domino en fonction de l'orientation.
     }
 
     @Override
     public void put() {
         if (isValid()) {
+            this.domino.setPosition(this.position);
             grille.setDomino(domino, orientation);
         }else System.out.println("Domino invalide");
     }
@@ -43,8 +46,8 @@ public class PutDomino implements IPut {
     // Vérifie l'adjacence avec une case de domino avec paysage identique ou d'un chateau.
     public HashSet<Case> verifyAdjacence() {
 
-        int dX = domino.getPosition()[0];
-        int dY = domino.getPosition()[1];
+        int dX = this.position[0];
+        int dY = this.position[1];
 
         HashSet<Case> casesVoisine = new HashSet<>();
 
@@ -89,19 +92,19 @@ public class PutDomino implements IPut {
     }
 
     public boolean dominoIsNotColliding() {
-        int dX = domino.getPosition()[0];
-        int dY = domino.getPosition()[1];
+        int dX = this.position[0];
+        int dY = this.position[1];
 
         switch (orientation) {
             case "horizontal":
             case "horizontalReversed":
                 if (!grille.isOutofBound(dX,dY) && !grille.isOutofBound(dX,dY-1))
-                    return !grille.getCase(domino.getPosition()).isOccuped() && !grille.getCase(new int[]{dX,dY-1}).isOccuped();
+                    return !grille.getCase(this.position).isOccuped() && !grille.getCase(new int[]{dX,dY-1}).isOccuped();
                 return false;
             case "vertical":
             case "verticalReversed":
                 if (!grille.isOutofBound(dX,dY) && !grille.isOutofBound(dX - 1,dY))
-                    return !grille.getCase(domino.getPosition()).isOccuped() && !grille.getCase(new int[]{dX-1,dY}).isOccuped();
+                    return !grille.getCase(this.position).isOccuped() && !grille.getCase(new int[]{dX-1,dY}).isOccuped();
                 return false;
             default:
                 return false;
@@ -114,4 +117,9 @@ public class PutDomino implements IPut {
         }
     }
 
+    public String toString(){
+        return this.domino.toString() + " " +
+                this.orientation + " " + this.position[0] + " "
+                + this.position[1];
+    }
 }

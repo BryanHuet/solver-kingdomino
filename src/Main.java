@@ -4,6 +4,7 @@ import model.pieces.Castle;
 import model.pieces.domino.Domino;
 import model.pieces.domino.DominoFactory;
 import model.plateau.Grille;
+import model.plateau.Score;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
 
@@ -59,7 +60,7 @@ public class Main{
       System.out.println("-------------------------");
 
       Domino d = DominoFactory.getDomino(30,new int[]{1,2});
-      PutDomino p = new PutDomino(grille, d, "verticalReversed");
+      PutDomino p = new PutDomino(grille, d, "verticalReversed",new int[]{1,2});
       p.put();
 
       /*
@@ -69,11 +70,11 @@ public class Main{
        */
 
       Domino d2 = DominoFactory.getDomino(20 ,new int[]{4,2});
-      PutDomino p2 = new PutDomino(grille, d2, "vertical");
+      PutDomino p2 = new PutDomino(grille, d2, "vertical",new int[]{4,2});
       grille.afficheGrille();
 
       Domino d3 = DominoFactory.getDomino(30 ,new int[]{1,4});
-      PutDomino p3 = new PutDomino(grille, d3, "horizontal");
+      PutDomino p3 = new PutDomino(grille, d3, "horizontal",new int[]{1,2});
       grille.afficheGrille();
 
       System.out.println("--------------------------");
@@ -83,6 +84,7 @@ public class Main{
       System.out.println("--------------------------");
       p3.put();
       grille.afficheGrille();
+      System.out.println(Score.getTheMostPaysage(grille));
 
   }
 }

@@ -1,9 +1,12 @@
 package model;
 
+import model.pieces.domino.Domino;
 import model.plateau.Grille;
 import model.plateau.Score;
 import model.plateau.actions.IPut;
+import model.plateau.actions.PutDomino;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Player {
@@ -11,7 +14,6 @@ public class Player {
     private int id;
     private int score;
     private Grille plateau;
-    private IPut last;
 
     public Player(int id){
         this.id = id;
@@ -34,16 +36,32 @@ public class Player {
         this.plateau = plateau;
     }
 
+    public HashSet<IPut> actionsPossible(ArrayList<Domino> dominos){
+        HashSet<IPut> coups = new HashSet<>();
+        for (int i = 0; i < this.getPlateau().getNbLigne(); i++) {
+            for (int j = 0; j < this.getPlateau().getNbColonne(); j++) {
+                for (Domino d : dominos){
+                    PutDomino actionh = new PutDomino(this.getPlateau(),d,"horizontal",new int[]{i,j});
+                    PutDomino actionv = new PutDomino(this.getPlateau(),d,"vertical",new int[]{i,j});
+                    if(actionh.isValid()){
+                        coups.add(actionh);
+                    }
+                    if (actionv.isValid()){
+                        coups.add(actionv);
+                    }
+                }
+            }
+        }
+        return coups;
+    }
+
     public void play(IPut action){
         action.put();
-        this.last=action;
     }
 
     public int getScore() {
         return Score.calculateScore(this.getPlateau());
     }
 
-    public IPut getLast() {
-        return this.last;
-    }
+
 }
