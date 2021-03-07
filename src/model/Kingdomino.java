@@ -58,26 +58,35 @@ public class Kingdomino {
             }
             System.out.println("Tirage de la pioches");
             pick();
-            for(Domino d : this.pick){
-                System.out.println(d);
-            }
+
 
             for(Player p : this.players){
                 this.currentPlayer=p;
-                System.out.println("Veuillez choisir un domino 0 ou 1");
+                int j=0;
+                for(Domino d : this.pick){
+                    System.out.print(j+" "+d+"|");
+                    j=j+1;
+                }
+                System.out.println("\nVeuillez choisir un domino");
                 Scanner myObj = new Scanner(System.in);
                 int idDomino = myObj.nextInt();
                 Domino chosen = this.pick.get(idDomino);
-                System.out.println("Veuillez placez votre domino 22h pour x=2 et y=2 et orientation = h ou v");
-                for (IPut action: p.actionsPossible(this.pick)){
-                    System.out.println(action);
+                ArrayList<Domino> justTest = new ArrayList<>();
+                justTest.add(chosen);
+                this.pick.remove(this.pick.get(idDomino));
+                System.out.println("Veuillez choisir une action");
+                int i=0;
+                for (IPut action: p.actionsPossible(justTest)){
+                    System.out.print(i+" "+action+" | ");
+                    if (i%2==0){
+                        System.out.println();
+                    }
+                    i=i+1;
                 }
+                System.out.println();
                 Scanner myObj2 = new Scanner(System.in);
-                String position = myObj2.nextLine();
-
-                PutDomino pu = new PutDomino(p.getPlateau(),chosen,position.charAt(2)=='h'? "horizontal":"vertical",new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
-                p.play(pu);
-
+                int position = myObj2.nextInt();
+                p.play(p.actionsPossible(justTest).get(position));
                 p.getPlateau().afficheGrille();
                 System.out.println("Votre score est de :"+ Score.calculateScore(p.getPlateau()));
 

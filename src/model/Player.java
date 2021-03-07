@@ -36,8 +36,8 @@ public class Player {
         this.plateau = plateau;
     }
 
-    public HashSet<IPut> actionsPossible(ArrayList<Domino> dominos){
-        HashSet<IPut> coups = new HashSet<>();
+    public ArrayList<IPut> actionsPossible(ArrayList<Domino> dominos){
+        ArrayList<IPut> coups = new ArrayList<>();
         for (int i = 0; i < this.getPlateau().getNbLigne(); i++) {
             for (int j = 0; j < this.getPlateau().getNbColonne(); j++) {
                 for (Domino d : dominos){

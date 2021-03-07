@@ -50,7 +50,7 @@ public class Main{
       grille.afficheGrille();
 
        */
-
+/*
       // Grille et chateau
       Grille grille = new Grille(5,5);
       Castle castle = new Castle(new int[]{2,2});
@@ -68,7 +68,7 @@ public class Main{
       PutDomino p2 = new PutDomino(grille, d2, "verticalReversed");
 
        */
-
+/*
       Domino d2 = DominoFactory.getDomino(20 ,new int[]{4,2});
       PutDomino p2 = new PutDomino(grille, d2, "vertical",new int[]{4,2});
       grille.afficheGrille();
@@ -85,6 +85,6 @@ public class Main{
       p3.put();
       grille.afficheGrille();
       System.out.println(Score.getTheMostPaysage(grille));
-
+*/
   }
 }
