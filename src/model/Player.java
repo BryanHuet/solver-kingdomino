@@ -60,7 +60,8 @@ public class Player {
     }
 
     public int getScore() {
-        return Score.calculateScore(this.getPlateau());
+        Score score = new Score(plateau);
+        return score.calculateScore();
     }
 
 

@@ -88,7 +88,8 @@ public class Kingdomino {
                 int position = myObj2.nextInt();
                 p.play(p.actionsPossible(justTest).get(position));
                 p.getPlateau().afficheGrille();
-                System.out.println("Votre score est de :"+ Score.calculateScore(p.getPlateau()));
+                Score score = new Score(p.getPlateau());
+                System.out.println("Votre score est de :"+ score.calculateScore());
 
             }
             this.pick.clear();
