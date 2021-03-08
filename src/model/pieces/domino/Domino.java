@@ -7,17 +7,25 @@ public class Domino {
     private Case extremiteGauche;
     private Case extremiteDroite;
     private boolean estPoser;
-    private int numeroDomino;
+    private final int numeroDomino;
     private int[] position;
 
-    public Domino(Case extremiteGauche, Case extremiteDroite, int numeroDomino, int[] position) {
+    /*** +
+     *
+     * @param extremiteGauche Extremité gauche du Domino.
+     * @param extremiteDroite Extremité droite du Domino.
+     * @param numeroDomino Le numéro du domino.
+     */
+    public Domino(Case extremiteGauche, Case extremiteDroite, int numeroDomino) {
         this.extremiteGauche = extremiteGauche;
         this.extremiteDroite = extremiteDroite;
         this.numeroDomino = numeroDomino;
-        this.position = position;
         this.estPoser = false;
     }
 
+    /***
+     * Getters
+     */
     public Case getExtremiteGauche() {
         return extremiteGauche;
     }
@@ -31,10 +39,14 @@ public class Domino {
     }
 
     public int[] getPosition() { return position; }
+
     public boolean estPoser() {
         return estPoser;
     }
 
+    /**
+     * Setters
+     */
     public void setEstPoser(boolean etat) {
         estPoser = etat;
     }
@@ -43,6 +55,7 @@ public class Domino {
         this.position = position;
     }
 
+    @Override
     public String toString(){
         return "[" +this.getExtremiteGauche().getPaysage().getName() + " "+
                 this.getExtremiteGauche().getPaysage().getNbCouronnes() +
@@ -50,6 +63,9 @@ public class Domino {
                  this.getExtremiteDroite().getPaysage().getNbCouronnes() +"]";
     }
 
+    /***
+     * Méthode qui permet d'inverser les extremités du Domino.
+     */
     public void reverseExtremite() {
         Case tmp = extremiteDroite;
         this.extremiteDroite = extremiteGauche;

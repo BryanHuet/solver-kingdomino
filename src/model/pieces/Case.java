@@ -1,9 +1,9 @@
 package model.pieces;
 public class Case {
 
-    private Paysage paysage;
-    private String symbole; // juste pour l'affichage
-    private boolean occupe;
+    private final Paysage paysage;
+    private final String symbole; // juste pour l'affichage
+    private final boolean occupe;
 
 
     // Case vide d'une grille
@@ -13,6 +13,11 @@ public class Case {
         this.occupe = false;
     }
 
+    /***
+     *
+     * @param paysage Paysage d'une case.
+     * @param symbole Le symbole est un String servant à l'affichage.
+     */
     // Case construite (pour une extremité de domino/ le chateau voir autres choses si on veut)
     public Case(Paysage paysage, String symbole) {
         this.paysage = paysage;
@@ -20,6 +25,9 @@ public class Case {
         this.occupe = true;
     }
 
+    /***
+     * Getters
+     */
     public Paysage getPaysage() {
         return paysage;
     }

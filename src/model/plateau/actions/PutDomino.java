@@ -9,25 +9,35 @@ import java.util.HashSet;
 
 public class PutDomino implements IPut {
 
-    private Grille grille;
-    private Domino domino;
-    private String orientation;
-    private int[] position;
+    private final Grille grille;
+    private final Domino domino;
+    private final String orientation;
+    private final int[] position;
 
+    /***
+     * 
+     * @param grille La grille de jeu.
+     * @param domino Le domino à ajouter.
+     * @param orientation L'orientation dans laquelle on l'ajoute.
+     * @param position La position à laquelle on l'ajoute.
+     */
     public PutDomino(Grille grille, Domino domino, String orientation, int[] position) {
         this.grille = grille;
         this.domino = domino;
         this.orientation = orientation;
         this.position=position;
-        adaptOrientation(); // On adapte les extremités du domino en fonction de l'orientation.
     }
 
     @Override
     public void put() {
+        adaptOrientation(); // On adapte les extremités du domino en fonction de l'orientation (pour les cas à l'envers).
         if (isValid()) {
             this.domino.setPosition(this.position);
             grille.setDomino(domino, orientation);
-        }else System.out.println("Domino invalide");
+        }else {
+            System.out.println("Domino invalide");
+            adaptOrientation(); // L'action est invalide on remet l'orientation originale du domino (on la remet droit).
+        }
     }
 
     @Override
@@ -38,12 +48,19 @@ public class PutDomino implements IPut {
         return false;
     }
 
+    /***
+     *
+     * @return Booléen qui confirme l'adjacence ou non d'un domino en fonction des cases voisines trouvées.
+     */
     public boolean isDominoAdjacent() {
         HashSet<Case> voisins = verifyAdjacence();
         return voisins.size() > 0;
     }
 
-    // Vérifie l'adjacence avec une case de domino avec paysage identique ou d'un chateau.
+    /***
+     *
+     * @return Un ensemble de cases voisines vérifiant l'adjacence des cases du domino.
+     */
     public HashSet<Case> verifyAdjacence() {
 
         int dX = this.position[0];
@@ -67,30 +84,41 @@ public class PutDomino implements IPut {
         return casesVoisine;
         }
 
-    public void searchAdjacence(int dX, int dY, HashSet<Case> casesVoisine, String dominoName) {
+    /***
+     * 
+     * @param dX Index x de la recherche d'adjacence.
+     * @param dY Index y de la recherche d'adjacence.
+     * @param casesVoisine Cases voisine sauvegardés.
+     * @param paysageName Le nom du paysage à vérifier.
+     */
+    public void searchAdjacence(int dX, int dY, HashSet<Case> casesVoisine, String paysageName) {
 
         if (!grille.isOutofBound(dX - 1,dY) && dominoIsNotColliding()) {
-            if (grille.getCaseBis(dX-1,dY).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX-1,dY).getPaysage().getName().equals("castle")) {
+            if (grille.getCaseBis(dX-1,dY).getPaysage().getName().equals(paysageName) || grille.getCaseBis(dX-1,dY).getPaysage().getName().equals("castle")) {
                 casesVoisine.add(grille.getCaseBis(dX-1,dY));
             }
         }
         if (!grille.isOutofBound(dX + 1,dY) && dominoIsNotColliding()) {
-            if (grille.getCaseBis(dX+1,dY).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX+1,dY).getPaysage().getName().equals("castle")) {
+            if (grille.getCaseBis(dX+1,dY).getPaysage().getName().equals(paysageName) || grille.getCaseBis(dX+1,dY).getPaysage().getName().equals("castle")) {
                 casesVoisine.add(grille.getCaseBis(dX + 1,dY));
             }
         }
         if (!grille.isOutofBound(dX,dY - 1) && dominoIsNotColliding()) {
-            if (grille.getCaseBis(dX,dY - 1).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX,dY-1).getPaysage().getName().equals("castle")) {
+            if (grille.getCaseBis(dX,dY - 1).getPaysage().getName().equals(paysageName) || grille.getCaseBis(dX,dY-1).getPaysage().getName().equals("castle")) {
                 casesVoisine.add(grille.getCaseBis(dX,dY - 1));
             }
         }
         if (!grille.isOutofBound(dX,dY + 1) && dominoIsNotColliding()) {
-            if (grille.getCaseBis(dX,dY + 1).getPaysage().getName().equals(dominoName) || grille.getCaseBis(dX,dY+1).getPaysage().getName().equals("castle")) {
+            if (grille.getCaseBis(dX,dY + 1).getPaysage().getName().equals(paysageName) || grille.getCaseBis(dX,dY+1).getPaysage().getName().equals("castle")) {
                 casesVoisine.add(grille.getCaseBis(dX,dY + 1));
             }
         }
     }
 
+    /***
+     *
+     * @return Booléen qui vérifie que le domino ne dispose pas de collision en fonction de l'orientation.
+     */
     public boolean dominoIsNotColliding() {
         int dX = this.position[0];
         int dY = this.position[1];
@@ -111,12 +139,16 @@ public class PutDomino implements IPut {
         }
     }
 
+    /***
+     * Adapte l'orientation de la pièce.
+     */
     public void adaptOrientation() {
         if (orientation.equals("horizontalReversed") || orientation.equals("verticalReversed")) {
             domino.reverseExtremite();
         }
     }
 
+    @Override
     public String toString(){
         return this.domino.toString() + " " +
                 this.orientation + " " + this.position[0] + " "

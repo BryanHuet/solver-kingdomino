@@ -5,28 +5,42 @@ import model.plateau.Grille;
 
 public class PutCastle implements IPut {
 
-    private Grille grille;
-    private Castle castle;
+    private final Grille grille;
+    private final Castle castle;
+    private int[] position;
 
-    public PutCastle(Grille grille, Castle castle) {
+    /***
+     *
+     * @param grille La grille du jeu.
+     * @param castle Le château à ajouter.
+     * @param position La position sur laquelle on l'ajoute.
+     */
+    public PutCastle(Grille grille, Castle castle, int[] position) {
         this.grille = grille;
         this.castle = castle;
+        this.position = position;
     }
 
     @Override
     public void put() {
-        int indexX = castle.getPosition()[0];
-        int indexY = castle.getPosition()[1];
+        int indexX = position[0];
+        int indexY = position[1];
 
         if (isValid()) {
+            castle.setPosition(new int[] {indexX, indexY});
             grille.setCastle(castle); // set la case du Chateau + on garde en mémoire la chateau
+        }
+        else {
+            System.out.println("Attention ! aucun château n'existait, un a été mis par défaut au milieu de la grille.");
+            position = new int[] { grille.getNbLigne() / 2, grille.getNbColonne() / 2};
+            put();
         }
     }
 
     // Pas besoin de vérifier si un domino est présent, le chateau est la première pièce.
     @Override
     public boolean isValid() {
-        return !grille.isOutofBound(castle.getPosition()[0],castle.getPosition()[1]);
+        return !grille.isOutofBound(position[0],position[1]);
     }
 
 

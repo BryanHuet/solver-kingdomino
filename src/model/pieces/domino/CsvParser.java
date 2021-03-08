@@ -12,6 +12,10 @@ import java.util.List;
 
 public class CsvParser {
 
+    /***
+     *
+     * @return Liste de liste des données parser à partir du fichier "kingdomino.csv"
+     */
     public static List<List<String>> parse() {
         List<List<String>> parsedLists = new ArrayList<List<String>>();
         try (CSVReader csvReader = new CSVReader(new FileReader("kingdomino.csv"));) {
@@ -29,6 +33,10 @@ public class CsvParser {
         return parsedLists;
     }
 
+    /***
+     *
+     * @param newList Liste de liste des données parser à afficher
+     */
     public static void afficheListe(List<List<String>> newList) {
         for (List<String> cs : newList) {
             if (!cs.isEmpty()) {

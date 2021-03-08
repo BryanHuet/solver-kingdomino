@@ -45,8 +45,8 @@ public class Kingdomino {
             System.out.println("Veuillez placer votre chateau 22 pour x=2 et y=2");
             Scanner myObj = new Scanner(System.in);
             String position = myObj.nextLine();
-            Castle castle = new Castle(new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
-            PutCastle c = new PutCastle(p.getPlateau(), castle);
+            Castle castle = new Castle();
+            PutCastle c = new PutCastle(p.getPlateau(), castle, new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
             c.put();
             p.getPlateau().afficheGrille();
         }

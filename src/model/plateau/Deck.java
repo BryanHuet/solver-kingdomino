@@ -20,7 +20,7 @@ public class Deck {
         this.deck = new ArrayList<>();
         this.remainingCase = new HashMap<>();
         for(int i=0; i<this.size; i++){
-            Domino d = DominoFactory.getDomino(i,new int []{0,0});
+            Domino d = DominoFactory.getDomino(i);
             this.deck.add(d);
             this.remainingCase.put(d.getExtremiteDroite().getPaysage().getName(), 0);
             this.remainingCase.put(d.getExtremiteGauche().getPaysage().getName(), 0);

@@ -53,34 +53,34 @@ public class Main{
 
       // Grille et chateau
       Grille grille = new Grille(5,5);
-      Castle castle = new Castle(new int[]{2,2});
-      PutCastle c = new PutCastle(grille, castle);
+      Castle castle = new Castle();
+      PutCastle c = new PutCastle(grille, castle, new int[] {2,2});
       c.put();
       grille.afficheGrille();
       System.out.println("-------------------------");
 
-      Domino d = DominoFactory.getDomino(30,new int[]{1,2});
+      Domino d = DominoFactory.getDomino(30);
       PutDomino p = new PutDomino(grille, d, "verticalReversed",new int[]{1,2});
       p.put();
 
-      Domino d2 = DominoFactory.getDomino(30 ,new int[]{1,3});
+      Domino d2 = DominoFactory.getDomino(30);
 
       PutDomino p2 = new PutDomino(grille, d2, "vertical",new int[]{4,2});
       grille.afficheGrille();
 
-      Domino d3 = DominoFactory.getDomino(30 ,new int[]{1,4});
+      Domino d3 = DominoFactory.getDomino(30);
       PutDomino p3 = new PutDomino(grille, d3, "horizontal",new int[]{1,4});
       grille.afficheGrille();
 
-      Domino d4 = DominoFactory.getDomino(30 ,new int[]{1,4});
+      Domino d4 = DominoFactory.getDomino(30);
       PutDomino p4 = new PutDomino(grille, d4, "verticalReversed",new int[]{1,1});
       grille.afficheGrille();
 
-      Domino d5 = DominoFactory.getDomino(30 ,new int[]{1,4});
+      Domino d5 = DominoFactory.getDomino(30);
       PutDomino p5 = new PutDomino(grille, d5, "horizontalReversed",new int[]{2,1});
       grille.afficheGrille();
 
-      Domino d6 = DominoFactory.getDomino(18 ,new int[]{1,4});
+      Domino d6 = DominoFactory.getDomino(18);
       PutDomino p6 = new PutDomino(grille, d6, "vertical",new int[]{3,4});
       grille.afficheGrille();
 
@@ -97,6 +97,8 @@ public class Main{
       grille.afficheGrille();
       System.out.println("--------------------------");
       p5.put();
+      grille.afficheGrille();
+      System.out.println("--------------------------");
       p6.put();
       grille.afficheGrille();
 

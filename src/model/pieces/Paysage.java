@@ -4,14 +4,22 @@ import java.util.Objects;
 
 public class Paysage {
 
-    private String name;
-    private int nbCouronnes;
+    private final String name;
+    private final int nbCouronnes;
 
+    /***
+     *
+     * @param name Nom du paysage.
+     * @param nbCouronnes Nombre de couronnes lié au paysage.
+     */
     public Paysage(String name, int nbCouronnes) {
         this.name = name;
         this.nbCouronnes = nbCouronnes;
     }
 
+    /***
+     * Getters
+     */
     public String getName() {
         return this.name;
     }
