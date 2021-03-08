@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public class PutDomino implements IPut {
 
-    private final Grille grille;
+    private Grille grille;
     private final Domino domino;
     private final String orientation;
     private final int[] position;
@@ -26,6 +26,10 @@ public class PutDomino implements IPut {
         this.domino = domino;
         this.orientation = orientation;
         this.position=position;
+    }
+
+    public void setGrille(Grille grille){
+        this.grille=grille;
     }
 
     @Override

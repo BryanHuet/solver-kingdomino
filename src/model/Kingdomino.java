@@ -1,14 +1,11 @@
 package model;
 
-import model.Player;
 import model.pieces.Castle;
 import model.pieces.domino.Domino;
-import model.pieces.domino.DominoFactory;
 import model.plateau.Deck;
 import model.plateau.Score;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
-import model.plateau.actions.PutDomino;
 
 import java.util.*;
 
@@ -29,12 +26,18 @@ public class Kingdomino {
     }
 
     public void pick(){
-        for(int i = 0;i<this.players.size();i++){
+        if(this.players.size()<=0){
+            System.out.println("aucun joueur, donc aucun domino n'est tiré");
+        }
+        if(this.getPick().size()!=0){
+            this.pick.clear();
+        }
+        for(int i = 0;i<this.players.size()+1;i++){
             Random random = new Random();
             int nb;
-            nb = random.nextInt(this.deck.getDeck().size());
-            this.pick.add(this.deck.getDeck().get(nb));
-            this.deck.getDeck().remove(nb);
+            nb = random.nextInt(this.deck.getDominos().size());
+            this.pick.add(this.deck.getDominos().get(nb));
+            this.deck.getDominos().remove(nb);
         }
     }
 
@@ -53,7 +56,7 @@ public class Kingdomino {
         int n=1;
         while(! this.terminate){
             System.out.println("============= TOUR "+n+" ==================");
-            if (this.deck.getDeck().size()==0){
+            if (this.deck.getDominos().size()==0){
                 this.terminate = true;
             }
             System.out.println("Tirage de la pioches");
@@ -62,34 +65,36 @@ public class Kingdomino {
 
             for(Player p : this.players){
                 this.currentPlayer=p;
-                int j=0;
-                for(Domino d : this.pick){
-                    System.out.print(j+" "+d+"|");
-                    j=j+1;
-                }
-                System.out.println("\nVeuillez choisir un domino");
-                Scanner myObj = new Scanner(System.in);
-                int idDomino = myObj.nextInt();
-                Domino chosen = this.pick.get(idDomino);
-                ArrayList<Domino> justTest = new ArrayList<>();
-                justTest.add(chosen);
-                this.pick.remove(this.pick.get(idDomino));
-                System.out.println("Veuillez choisir une action");
-                int i=0;
-                for (IPut action: p.actionsPossible(justTest)){
-                    System.out.print(i+" "+action+" | ");
-                    if (i%2==0){
-                        System.out.println();
+                if (! (this.currentPlayer instanceof Robot)){
+                    int j=0;
+                    for(Domino d : this.pick){
+                        System.out.print(j+" "+d+"|");
+                        j=j+1;
                     }
-                    i=i+1;
+                    System.out.println("\nVeuillez choisir un domino");
+                    Scanner myObj = new Scanner(System.in);
+                    int idDomino = myObj.nextInt();
+                    Domino chosen = this.pick.get(idDomino);
+                    ArrayList<Domino> justTest = new ArrayList<>();
+                    justTest.add(chosen);
+                    this.pick.remove(this.pick.get(idDomino));
+                    System.out.println("Veuillez choisir une action");
+                    int i=0;
+                    for (IPut action: p.actionsPossible(justTest)){
+                        System.out.print(i+" "+action+" | ");
+                        if (i%2==0){
+                            System.out.println();
+                        }
+                        i=i+1;
+                    }
+                    System.out.println();
+                    Scanner myObj2 = new Scanner(System.in);
+                    int position = myObj2.nextInt();
+                    p.play(p.actionsPossible(justTest).get(position));
+                    p.getPlateau().afficheGrille();
+                    System.out.println("Votre score est de :"+ p.getScore());
                 }
-                System.out.println();
-                Scanner myObj2 = new Scanner(System.in);
-                int position = myObj2.nextInt();
-                p.play(p.actionsPossible(justTest).get(position));
-                p.getPlateau().afficheGrille();
-                Score score = new Score(p.getPlateau());
-                System.out.println("Votre score est de :"+ score.calculateScore());
+                p.playAi();
 
             }
             this.pick.clear();
@@ -100,7 +105,7 @@ public class Kingdomino {
     }
 
     public Deck getDeck() {
-        return this.getDeck();
+        return this.deck;
     }
     public void addPlayer(Player player){
         players.add(player);
@@ -113,7 +118,7 @@ public class Kingdomino {
 
         Kingdomino game = new Kingdomino();
         Player one = new Player(1);
-        Player two = new Robot(2);
+        Player two = new Robot(2,game,3);
         game.addPlayer(one);
         game.addPlayer(two);
         game.start();

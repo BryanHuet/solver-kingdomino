@@ -27,9 +27,16 @@ public class Deck {
         }
 
     }
+    public Deck(int size, boolean clear){
+        this(size);
+        if(clear){
+            this.deck.clear();
+        }
+    }
     //getters
     public int getSize() { return size; }
-    public ArrayList<Domino> getDeck() { return deck; }
+    public int getNbDominos(){ return this.deck.size(); }
+    public ArrayList<Domino> getDominos() { return this.deck; }
     public HashMap<String, Integer> getRemainingCase() { this.updateRemaining();return remainingCase; }
 
     //setters
@@ -37,6 +44,12 @@ public class Deck {
     public void setDeck(ArrayList<Domino> deck) { this.deck = deck; }
 
 
+    public void addDomino(Domino d){
+        this.deck.add(d);
+    }
+    public void removeDomino(Domino d){
+        this.deck.remove(d);
+    }
     public void updateRemaining(){
         for(Domino d : this.deck){
             this.remainingCase.put(d.getExtremiteDroite().getPaysage().getName(),this.remainingCase.get(d.getExtremiteDroite().getPaysage().getName())+1);
