@@ -17,7 +17,8 @@ public class Node {
         this.player = player;
         this.state = state;
         this.child = new HashSet<>();
-        this.heuristic = player.getScore();
+        Score score = new Score(this.getState().getSavesGrid().get(this.player));
+        this.heuristic = score.calculateScore();
     }
 
 

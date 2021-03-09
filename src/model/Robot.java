@@ -31,17 +31,24 @@ public class Robot extends Player{
         PutDomino actionChosen = null;
         float maximum = -100000000;
         HashSet<Node> roots = new HashSet<>();
+        System.out.println("hello");
+        this.getPlateau().afficheGrille();
         for (PutDomino action : this.actionsPossible(game.getPick())){
             State state = new State(game);
+            System.out.println("etat");
+            state.getSavesGrid().get(this).afficheGrille();
             state.setActualPayer(this);
             action.setGrille(state.getSavesGrid().get(this));
             action.put();
+            System.out.println("afteraction");
+            state.getSavesGrid().get(this).afficheGrille();
             Node root = new Node(state.getActualPayer(),state);
             roots.add(root);
             float expecti = (new Expectiminimax(root.getPlayer()).calcul(root,1));
             //System.out.println("expecti - "+expecti);
             //System.out.println(expecti);
             //state.getActualPayer().getPlateau().afficheGrille();
+            System.out.println("action: "+action + " value : " + expecti);
             if( expecti > maximum){
                 maximum=expecti;
                 actionChosen=action;
@@ -63,27 +70,41 @@ public class Robot extends Player{
         Castle castle = new Castle();
         PutCastle c = new PutCastle(a.getPlateau(), castle,new int[]{2,2});
         c.put();
+        System.out.println("===============tour 1===================");
         game.pick();
+        System.out.println();
         System.out.println(game.getPick());
         IPut action = a.playAi();
         a.play(action);
         a.getPlateau().afficheGrille();
+
+        System.out.println("===============tour 2===================");
         game.pick();
+        System.out.println();
         System.out.println(game.getPick());
         IPut action2 = a.playAi();
         a.play(action2);
         a.getPlateau().afficheGrille();
+
+        System.out.println("===============tour 3===================");
         game.pick();
+        System.out.println();
         System.out.println(game.getPick());
         IPut action3 = a.playAi();
         a.play(action3);
         a.getPlateau().afficheGrille();
+
+        System.out.println("===============tour 4===================");
         game.pick();
+        System.out.println();
         System.out.println(game.getPick());
         IPut action4 = a.playAi();
         a.play(action4);
         a.getPlateau().afficheGrille();
+
+        System.out.println("===============tour 5===================");
         game.pick();
+        System.out.println();
         System.out.println(game.getPick());
         IPut action5 = a.playAi();
         a.play(action5);
