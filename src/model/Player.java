@@ -51,10 +51,10 @@ public class Player {
                     if (actionv.isValid()){
                         coups.add(actionv);
                     }
-                    if(actionh.isValid()){
+                    if(actionhr.isValid()){
                         coups.add(actionhr);
                     }
-                    if (actionv.isValid()){
+                    if (actionvr.isValid()){
                         coups.add(actionvr);
                     }
                 }

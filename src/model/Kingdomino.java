@@ -91,12 +91,14 @@ public class Kingdomino {
                     Scanner myObj2 = new Scanner(System.in);
                     int position = myObj2.nextInt();
                     p.play(p.actionsPossible(justTest).get(position));
-                    p.getPlateau().afficheGrille();
-                    System.out.println("Votre score est de :"+ p.getScore());
-                }
-                p.playAi();
 
+                }else{
+                    p.play(p.playAi());
+                }
+                p.getPlateau().afficheGrille();
+                System.out.println("Votre score est de :"+ p.getScore());
             }
+
             this.pick.clear();
 
 
