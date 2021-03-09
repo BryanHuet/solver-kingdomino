@@ -42,4 +42,11 @@ public class Node {
     public void addChild(Node child){
         this.child.add(child);
     }
+
+    public String toString(){
+        return "{"+
+                ""+this.getPlayer().getId() +" | "+this.heuristic+ "->" +this.getChild()
+                + "}";
+
+    }
 }

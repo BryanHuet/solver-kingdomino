@@ -23,33 +23,42 @@ public class PutDomino implements IPut {
      */
     public PutDomino(Grille grille, Domino domino, String orientation, int[] position) {
         this.grille = grille;
-        this.domino = domino;
+        this.domino = new Domino(domino.getExtremiteGauche(), domino.getExtremiteDroite(), domino.getNumeroDomino());
         this.orientation = orientation;
         this.position=position;
+        adaptOrientation();
     }
 
     public void setGrille(Grille grille){
         this.grille=grille;
     }
 
+    public Domino getDomino() {
+        return domino;
+    }
+
     @Override
-    public void put() {
-        adaptOrientation(); // On adapte les extremités du domino en fonction de l'orientation (pour les cas à l'envers).
+    public void put() { // On adapte les extremités du domino en fonction de l'orientation (pour les cas à l'envers).
+
+        adaptOrientation();
         if (isValid()) {
             this.domino.setPosition(this.position);
             grille.setDomino(domino, orientation);
-            adaptOrientation();
+            //System.out.println("Domino valide : " + toString());
+
         }else {
-            System.out.println("Domino invalide");
-            adaptOrientation(); // L'action est invalide on remet l'orientation originale du domino (on la remet droit).
+            System.out.println("Domino invalide : " + toString()); // L'action est invalide on remet l'orientation originale du domino (on la remet droit).
         }
+
     }
 
     @Override
     public boolean isValid() {
         if ((isDominoAdjacent() && dominoIsNotColliding())) {
+            adaptOrientation();
             return true;
         }
+
         return false;
     }
 

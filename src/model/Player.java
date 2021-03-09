@@ -14,6 +14,8 @@ public class Player {
     private int id;
     private int score;
     private Grille plateau;
+    private boolean canplay = true;
+
 
     public Player(int id){
         this.id = id;
@@ -60,7 +62,13 @@ public class Player {
                 }
             }
         }
+        if(coups.size()==0){
+            this.canplay=false;
+        }
         return coups;
+    }
+    public boolean getCanPlay(){
+        return this.canplay;
     }
 
     public void play(IPut action){

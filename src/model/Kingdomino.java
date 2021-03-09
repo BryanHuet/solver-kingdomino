@@ -6,6 +6,7 @@ import model.plateau.Deck;
 import model.plateau.Score;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
+import model.plateau.actions.PutDomino;
 
 import java.util.*;
 
@@ -104,6 +105,11 @@ public class Kingdomino {
 
             n=n+1;
         }
+    }
+
+    public void move(PutDomino action){
+        action.put();
+        this.pick.remove(action.getDomino());
     }
 
     public Deck getDeck() {

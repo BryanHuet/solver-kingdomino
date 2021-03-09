@@ -27,6 +27,32 @@ public class Robot extends Player{
         this.depth = depth;
     }
 
+
+    public void buildGraph(Node root, int depth) {
+        Player actual = null;
+        for (Player p : root.getState().getGame().getPlayers()) {
+            if (p != root.getPlayer()) {
+                actual=p;
+            }
+        }
+
+        if (depth > 1) {
+            //System.out.println(actual.actionsPossible(root.getState().getGame().getPick()));
+            //System.out.println("chui la");
+            for (PutDomino action : actual.actionsPossible(root.getState().getGame().getPick())) {
+                State state = new State(game);
+                state.setActualPayer(actual);
+                action.setGrille(state.getSavesGrid().get(state.getActualPayer()));
+                state.getGame().move(action);
+                Node childMin = new Node(state.getActualPayer(), state);
+                root.addChild(childMin);
+                this.buildGraph(childMin, depth - 1);
+            }
+
+        }
+    }
+
+
     public PutDomino playAi(){
         PutDomino actionChosen = null;
         float maximum = -100000000;
@@ -35,21 +61,21 @@ public class Robot extends Player{
             State state = new State(game);
             state.setActualPayer(this);
             action.setGrille(state.getSavesGrid().get(this));
-            action.put();
+            state.getGame().move(action);
             Node root = new Node(state.getActualPayer(),state);
             roots.add(root);
+            buildGraph(root, this.depth);
             float expecti = (new Expectiminimax(root.getPlayer()).calcul(root,1));
-            //System.out.println("expecti - "+expecti);
-            //System.out.println(expecti);
-            //state.getActualPayer().getPlateau().afficheGrille();
             if( expecti > maximum){
                 maximum=expecti;
                 actionChosen=action;
             }
         }
-        assert actionChosen != null;
-        actionChosen.setGrille(this.getPlateau());
-        maximum=-1000f;
+
+        if (actionChosen!=null){
+         actionChosen.setGrille(this.getPlateau());
+        }
+        System.out.println("choix : "+actionChosen);
         return actionChosen;
     }
 
@@ -57,48 +83,42 @@ public class Robot extends Player{
     public static void main(String[] args){
 
         Kingdomino game=new Kingdomino();
-        Robot a = new Robot(4,game,1);
+        Robot a = new Robot(4,game,2);
+        Robot b = new Robot(6,game,1);
         game.addPlayer(a);
+        game.addPlayer(b);
         Castle castle = new Castle();
         PutCastle c = new PutCastle(a.getPlateau(), castle,new int[]{2,2});
         c.put();
-        System.out.println("===============tour 1===================");
-        game.pick();
-        IPut action = a.playAi();
-        a.play(action);
-        a.getPlateau().afficheGrille();
+        Castle castle2 = new Castle();
+        PutCastle c2 = new PutCastle(b.getPlateau(), castle,new int[]{2,2});
+        c2.put();
 
-        System.out.println("===============tour 2===================");
-        game.pick();
-        System.out.println();
-        System.out.println(game.getPick());
-        IPut action2 = a.playAi();
-        a.play(action2);
-        a.getPlateau().afficheGrille();
+        int tour=10;
+        for(int i=0; i<tour;i++){
+            System.out.println();
+            System.out.println("===============tour "+(i+1)+"===================");
+            game.pick();
+            System.out.println("la pioche : "+game.getPick());
+            IPut action = a.playAi();
+            if(!a.getCanPlay()){
+                break;
+            }
+            a.play(action);
+            a.getPlateau().afficheGrille();
+            System.out.println("score a = "+a.getScore());
+            IPut action2 = b.playAi();
+            if(!b.getCanPlay()){
+                break;
+            }
+            b.play(action2);
+            b.getPlateau().afficheGrille();
+            System.out.println("score b = "+b.getScore());
+        }
 
-        System.out.println("===============tour 3===================");
-        game.pick();
-        System.out.println();
-        System.out.println(game.getPick());
-        IPut action3 = a.playAi();
-        a.play(action3);
-        a.getPlateau().afficheGrille();
-
-        System.out.println("===============tour 4===================");
-        game.pick();
-        System.out.println();
-        System.out.println(game.getPick());
-        IPut action4 = a.playAi();
-        a.play(action4);
-        a.getPlateau().afficheGrille();
-
-        System.out.println("===============tour 5===================");
-        game.pick();
-        System.out.println();
-        System.out.println(game.getPick());
-        IPut action5 = a.playAi();
-        a.play(action5);
-        a.getPlateau().afficheGrille();
+        State state = new State(game);
+        Node root = new Node(a,state);
+        //a.buildGraph(root,3);
 
 
     }
