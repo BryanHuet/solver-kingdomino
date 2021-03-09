@@ -38,6 +38,7 @@ public class PutDomino implements IPut {
         if (isValid()) {
             this.domino.setPosition(this.position);
             grille.setDomino(domino, orientation);
+            adaptOrientation();
         }else {
             System.out.println("Domino invalide");
             adaptOrientation(); // L'action est invalide on remet l'orientation originale du domino (on la remet droit).

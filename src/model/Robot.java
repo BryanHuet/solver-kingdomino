@@ -31,24 +31,17 @@ public class Robot extends Player{
         PutDomino actionChosen = null;
         float maximum = -100000000;
         HashSet<Node> roots = new HashSet<>();
-        System.out.println("hello");
-        this.getPlateau().afficheGrille();
         for (PutDomino action : this.actionsPossible(game.getPick())){
             State state = new State(game);
-            System.out.println("etat");
-            state.getSavesGrid().get(this).afficheGrille();
             state.setActualPayer(this);
             action.setGrille(state.getSavesGrid().get(this));
             action.put();
-            System.out.println("afteraction");
-            state.getSavesGrid().get(this).afficheGrille();
             Node root = new Node(state.getActualPayer(),state);
             roots.add(root);
             float expecti = (new Expectiminimax(root.getPlayer()).calcul(root,1));
             //System.out.println("expecti - "+expecti);
             //System.out.println(expecti);
             //state.getActualPayer().getPlateau().afficheGrille();
-            System.out.println("action: "+action + " value : " + expecti);
             if( expecti > maximum){
                 maximum=expecti;
                 actionChosen=action;
@@ -56,7 +49,6 @@ public class Robot extends Player{
         }
         assert actionChosen != null;
         actionChosen.setGrille(this.getPlateau());
-        System.out.println(actionChosen);
         maximum=-1000f;
         return actionChosen;
     }
@@ -72,8 +64,6 @@ public class Robot extends Player{
         c.put();
         System.out.println("===============tour 1===================");
         game.pick();
-        System.out.println();
-        System.out.println(game.getPick());
         IPut action = a.playAi();
         a.play(action);
         a.getPlateau().afficheGrille();

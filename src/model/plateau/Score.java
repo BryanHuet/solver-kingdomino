@@ -113,8 +113,29 @@ public class Score {
      */
     public int calculateScore() {
         ArrayList<Case> verifiedCases = new ArrayList<>();
-        return calculateVerifiedCases(verifiedCases);
+        return calculateVerifiedCases(verifiedCases) + pointBonus();
     }
 
+    /***
+     * Vérifie que toute la grille est complète.
+     */
+    public boolean checkPointBonus() {
+        boolean checker = true;
+        for (int i = 0; i < grille.getNbLigne(); i++) {
+            for (int j = 0; j < grille.getNbColonne(); j++) {
+                if (grille.getCaseBis(i,j).isOccuped() == false) {
+                    checker = false;
+                }
+            }
+        }
+        return checker;
+    }
 
+    /***
+     *
+     * @return 5 points si la grille est complète sinon rien.
+     */
+    public int pointBonus() {
+        return checkPointBonus() ? 5 : 0;
+    }
 }
