@@ -1,12 +1,10 @@
 package model.plateau;
 
-import model.pieces.Paysage;
 import model.pieces.domino.Domino;
 import model.pieces.domino.DominoFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Deck {
 

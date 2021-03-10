@@ -1,6 +1,4 @@
-package model.pieces;
-
-import java.util.Objects;
+package model.pieces.cases;
 
 public class Paysage {
 

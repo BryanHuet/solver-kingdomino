@@ -3,15 +3,13 @@ package model;
 import model.ia.Expectiminimax;
 import model.ia.Node;
 import model.ia.State;
-import model.pieces.Castle;
+import model.pieces.cases.Castle;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
-import static java.lang.Math.exp;
 import static java.lang.Math.max;
 
 public class Robot extends Player{

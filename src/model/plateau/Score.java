@@ -1,8 +1,7 @@
 package model.plateau;
 
-import model.pieces.Case;
+import model.pieces.cases.Case;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

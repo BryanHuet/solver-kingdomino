@@ -1,12 +1,13 @@
 package model.plateau.actions;
 
-import model.pieces.Castle;
+import model.pieces.cases.Case;
+import model.pieces.cases.Castle;
 import model.plateau.Grille;
 
 public class PutCastle implements IPut {
 
     private final Grille grille;
-    private final Castle castle;
+    private final Case castle;
     private int[] position;
 
     /***
