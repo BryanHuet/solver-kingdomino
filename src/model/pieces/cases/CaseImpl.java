@@ -2,9 +2,9 @@ package model.pieces.cases;
 
 public abstract class CaseImpl implements Case {
 
-    private Paysage paysage;
-    private String symbole;
-    private boolean occupe;
+    private final Paysage paysage;
+    private final String symbole;
+    private final boolean occupe;
     private int[] position;
 
     /***
