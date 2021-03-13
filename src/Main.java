@@ -1,6 +1,4 @@
-import model.Kingdomino;
-import model.Player;
-import model.pieces.Castle;
+import model.pieces.cases.Castle;
 import model.pieces.domino.Domino;
 import model.pieces.domino.DominoFactory;
 import model.plateau.Grille;

@@ -1,6 +1,6 @@
 package model.pieces.domino;
 
-import model.pieces.Case;
+import model.pieces.cases.Case;
 
 public class Domino {
 

@@ -1,6 +1,6 @@
 package model;
 
-import model.pieces.Castle;
+import model.pieces.cases.Castle;
 import model.pieces.domino.Domino;
 import model.plateau.Deck;
 import model.plateau.actions.IPut;

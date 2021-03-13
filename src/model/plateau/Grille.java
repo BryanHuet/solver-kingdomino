@@ -1,13 +1,11 @@
 package model.plateau;
 
-import model.pieces.Case;
-import model.pieces.Castle;
-import model.pieces.Paysage;
+import model.pieces.cases.Case;
+import model.pieces.cases.Castle;
+import model.pieces.cases.Paysage;
+import model.pieces.cases.Vide;
 import model.pieces.domino.Domino;
 import model.plateau.actions.PutCastle;
-import model.plateau.actions.PutDomino;
-
-import java.util.HashSet;
 
 public class Grille{
 
@@ -16,7 +14,7 @@ public class Grille{
     private final int nbColonne;
     private final Case[][] grille;
     // Sauvegarde
-    private Castle castle;
+    private Case castle;
 
     /***
      *
@@ -37,7 +35,7 @@ public class Grille{
     private void setGrille() {
         for (int i = 0; i < nbLigne; i++) {
             for (int j = 0; j < nbColonne; j++) {
-                grille[i][j] = new Case();
+                grille[i][j] = new Vide();
             }
         }
     }
@@ -100,7 +98,7 @@ public class Grille{
         return grille[x][y].getPaysage().getName();
     }
 
-    public Castle getCastle() {
+    public Case getCastle() {
         if (castle != null) {
             return castle;
         }
@@ -116,8 +114,8 @@ public class Grille{
      * Setters
      *
      */
-    public void setCastle(Castle castle) {
-        setCase(new int[]{castle.getPosition()[0], castle.getPosition()[1]}, castle.getCase());
+    public void setCastle(Case castle) {
+        setCase(new int[]{castle.getPosition()[0], castle.getPosition()[1]}, castle);
         this.castle = castle; // save
     }
 

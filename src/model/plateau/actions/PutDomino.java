@@ -1,7 +1,6 @@
 package model.plateau.actions;
 
-import model.pieces.Case;
-import model.pieces.Castle;
+import model.pieces.cases.Case;
 import model.pieces.domino.Domino;
 import model.plateau.Grille;
 
