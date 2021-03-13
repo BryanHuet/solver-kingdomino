@@ -55,23 +55,5 @@ public class State {
         this.actualPayer = actualPayer;
     }
 
-    public static void main(String[] args){
-
-        Kingdomino game = new Kingdomino();
-        game.addPlayer(new Player(3));
-        game.addPlayer(new Player(3));
-        game.addPlayer(new Player(3));
-        State a = new State(game);
-        game.pick();
-        game.pick();
-        State b = new State(game);
-        System.out.println("deck state a "+a.deck.getNbDominos());
-        System.out.println("deck Game "+game.getDeck().getNbDominos());
-        System.out.println("deck state b "+b.deck.getNbDominos());
-
-
-
-    }
-
 
 }

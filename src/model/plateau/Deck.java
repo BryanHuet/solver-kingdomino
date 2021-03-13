@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+///Etat interne incohérent possible
 public class Deck {
 
     private int size;
@@ -39,17 +40,16 @@ public class Deck {
     public ArrayList<Domino> getDominos() { return this.deck; }
     public HashMap<String, Integer> getRemainingCase() { this.updateRemaining();return remainingCase; }
 
-    //setters
-    public void setSize(int size) { this.size = size; }
-    public void setDeck(ArrayList<Domino> deck) { this.deck = deck; }
-
-
+//updateRemaining ici;
     public void addDomino(Domino d){
         this.deck.add(d);
+
     }
+//updateRemaining ici;
     public void removeDomino(Domino d){
         this.deck.remove(d);
     }
+
     public void updateRemaining(){
         for(Domino d : this.deck){
             this.remainingCase.put(d.getExtremiteDroite().getPaysage().getName(),this.remainingCase.get(d.getExtremiteDroite().getPaysage().getName())+1);

@@ -26,7 +26,6 @@ public class Node {
         return state;
     }
 
-
     public HashSet<Node> getChild() {
         return child;
     }

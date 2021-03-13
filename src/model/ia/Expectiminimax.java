@@ -1,42 +1,52 @@
 package model.ia;
+import model.Kingdomino;
 import model.Player;
 import model.plateau.Score;
+import model.plateau.actions.IPut;
+import model.plateau.actions.PutDomino;
 
 import java.lang.*;
+import java.util.HashSet;
 
-public class Expectiminimax {
+public class Expectiminimax implements Strategy{
 
     private Player player;
+    private int depth;
+    private Kingdomino game;
 
-    public Expectiminimax(Player player){
-        this.player=player;
+    public Expectiminimax(Player player, int depth, Kingdomino game){
+        this.player = player;
+        this.depth = depth;
+        this.game = game;
     }
 
 
-    public float calcul(Node node, int depth){
+    public float calcul(Node root,int depth){
         float a;
-        if(node.getChild().isEmpty() || depth == 0){
-            return node.getHeuristic();
+        if(root.getChild().isEmpty() || depth == 0){
+            return root.getHeuristic();
         }
-        if(node.getPlayer()!=this.player){
-            a=1000000000;
-            for(Node child: node.getChild()) {
-                a = Math.min(a, calcul(child, depth-1));
+        if(root.getPlayer()!=this.player){
+            a=Float.POSITIVE_INFINITY;
+            for(Node child: root.getChild()) {
+                a = Math.min(a, calcul(child,depth-1));
             }
-        }else if(node.getPlayer()==this.player){
-            a=-1000000000;
-            for(Node child: node.getChild()) {
-                a = Math.max(a, calcul(child, depth-1));
+        }else if(root.getPlayer()==this.player){
+            a=-Float.NEGATIVE_INFINITY;
+            for(Node child: root.getChild()) {
+                a = Math.max(a, calcul(child,depth-1));
             }
         }else{
             a = 0;
-            for(Node child: node.getChild()) {
+            for(Node child: root.getChild()) {
                 a += proba(child)* calcul(child,depth-1);
             }
         }
         return a;
     }
 
+    //Moyenne -> pourcentage de chance que ce noeud apparaisse faire la moyenne de ça;
+    // -->
     public float proba(Node node) {
 
         switch (Score.getTheMostPaysage(node.getPlayer().getPlateau())) {
@@ -56,6 +66,59 @@ public class Expectiminimax {
                 return (float) 0.0;
         }
 
+    }
+
+    public void buildGraph(Node root, int depth) {
+        Player actual = null;
+        for (Player p : root.getState().getGame().getPlayers()) {
+            if (p != root.getPlayer()) {
+                actual=p;
+            }
+        }
+
+        if (depth > 1) {
+            //System.out.println(actual.actionsPossible(root.getState().getGame().getPick()));
+            //System.out.println("chui la");
+            for (PutDomino action : actual.actionsPossible(root.getState().getGame().getPick())) {
+                State state = new State(game);
+                state.setActualPayer(actual);
+                action.setGrille(state.getSavesGrid().get(state.getActualPayer()));
+                state.getGame().move(action);
+                Node childMin = new Node(state.getActualPayer(), state);
+                root.addChild(childMin);
+                this.buildGraph(childMin, depth - 1);
+            }
+
+        }
+    }
+
+    @Override
+    public IPut resolution() {
+        PutDomino actionChosen = null;
+        float maximum = Float.NEGATIVE_INFINITY;
+        HashSet<Node> roots = new HashSet<>();
+        for (PutDomino action : this.player.actionsPossible(this.game.getPick())){
+            State state = new State(this.game);
+            state.setActualPayer(this.player);
+            action.setGrille(state.getSavesGrid().get(this.player));
+            this.game.move(action);
+            Node root = new Node(this.player,state);
+            roots.add(root);
+            buildGraph(root, this.depth);
+
+            float expecti = (new Expectiminimax(this.player,this.depth,this.game).calcul(root,this.depth));
+
+            if( expecti > maximum){
+                maximum=expecti;
+                actionChosen=action;
+            }
+        }
+
+        if (actionChosen!=null){
+            actionChosen.setGrille(this.player.getPlateau());
+        }
+        System.out.println("choix : "+actionChosen);
+        return actionChosen;
     }
 }
 

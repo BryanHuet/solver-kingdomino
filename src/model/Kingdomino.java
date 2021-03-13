@@ -3,7 +3,6 @@ package model;
 import model.pieces.Castle;
 import model.pieces.domino.Domino;
 import model.plateau.Deck;
-import model.plateau.Score;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
@@ -112,6 +111,8 @@ public class Kingdomino {
         this.pick.remove(action.getDomino());
     }
 
+    //methode clone
+
     public Deck getDeck() {
         return this.deck;
     }
@@ -126,10 +127,11 @@ public class Kingdomino {
 
         Kingdomino game = new Kingdomino();
         Player one = new Player(1);
-        Player two = new Robot(2,game,3);
+        Player two = new Player(2);
         game.addPlayer(one);
         game.addPlayer(two);
         game.start();
+
     }
 
 }
