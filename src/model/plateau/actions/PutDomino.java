@@ -14,7 +14,7 @@ public class PutDomino implements IPut {
     private final int[] position;
 
     /***
-     * 
+     *
      * @param grille La grille de jeu.
      * @param domino Le domino à ajouter.
      * @param orientation L'orientation dans laquelle on l'ajoute.
@@ -25,7 +25,6 @@ public class PutDomino implements IPut {
         this.domino = new Domino(domino.getExtremiteGauche(), domino.getExtremiteDroite(), domino.getNumeroDomino());
         this.orientation = orientation;
         this.position=position;
-        adaptOrientation();
     }
 
     public void setGrille(Grille grille){
@@ -39,7 +38,6 @@ public class PutDomino implements IPut {
     @Override
     public void put() { // On adapte les extremités du domino en fonction de l'orientation (pour les cas à l'envers).
 
-        adaptOrientation();
         if (isValid()) {
             this.domino.setPosition(this.position);
             grille.setDomino(domino, orientation);
@@ -54,7 +52,6 @@ public class PutDomino implements IPut {
     @Override
     public boolean isValid() {
         if ((isDominoAdjacent() && dominoIsNotColliding())) {
-            adaptOrientation();
             return true;
         }
 
@@ -84,21 +81,28 @@ public class PutDomino implements IPut {
         switch (orientation)
         {
             case "horizontal":
-            case "horizontalReversed":
                 searchAdjacence(dX, dY, casesVoisine, domino.getExtremiteDroite().getPaysage().getName());
                 searchAdjacence(dX, dY - 1, casesVoisine, domino.getExtremiteGauche().getPaysage().getName());
                 break;
+            case "horizontalReversed":
+                searchAdjacence(dX, dY, casesVoisine, domino.getExtremiteGauche().getPaysage().getName());
+                searchAdjacence(dX, dY - 1, casesVoisine, domino.getExtremiteDroite().getPaysage().getName());
+                break;
             case "vertical":
-            case "verticalReversed":
                 searchAdjacence(dX, dY, casesVoisine, domino.getExtremiteDroite().getPaysage().getName());
                 searchAdjacence(dX-1, dY, casesVoisine, domino.getExtremiteGauche().getPaysage().getName());
+                break;
+            case "verticalReversed":
+                searchAdjacence(dX, dY, casesVoisine, domino.getExtremiteGauche().getPaysage().getName());
+                searchAdjacence(dX-1, dY, casesVoisine, domino.getExtremiteDroite().getPaysage().getName());
+                break;
         }
 
         return casesVoisine;
-        }
+    }
 
     /***
-     * 
+     *
      * @param dX Index x de la recherche d'adjacence.
      * @param dY Index y de la recherche d'adjacence.
      * @param casesVoisine Cases voisine sauvegardés.
@@ -149,15 +153,6 @@ public class PutDomino implements IPut {
                 return false;
             default:
                 return false;
-        }
-    }
-
-    /***
-     * Adapte l'orientation de la pièce.
-     */
-    public void adaptOrientation() {
-        if (orientation.equals("horizontalReversed") || orientation.equals("verticalReversed")) {
-            domino.reverseExtremite();
         }
     }
 

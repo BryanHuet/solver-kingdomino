@@ -4,7 +4,7 @@ import model.ia.Expectiminimax;
 import model.ia.Node;
 import model.ia.State;
 import model.ia.Strategy;
-import model.pieces.Castle;
+import model.pieces.cases.Castle;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
 

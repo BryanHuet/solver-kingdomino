@@ -121,14 +121,22 @@ public class Grille{
 
     public void setDomino(Domino d, String orientation) {
 
-        if (orientation.equals("horizontal") || orientation.equals("horizontalReversed")) {
+        if (orientation.equals("horizontal")) {
             grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteDroite();
             grille[d.getPosition()[0]][d.getPosition()[1] - 1] = d.getExtremiteGauche();
-        } else if (orientation.equals("vertical") || orientation.equals("verticalReversed")) {
+        }
+        else if (orientation.equals("horizontalReversed")) {
+            grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteGauche();
+            grille[d.getPosition()[0]][d.getPosition()[1] - 1] = d.getExtremiteDroite();
+        }
+        else if (orientation.equals("vertical")) {
             grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteDroite();
             grille[d.getPosition()[0] - 1][d.getPosition()[1]] = d.getExtremiteGauche();
         }
-
+        else if (orientation.equals("verticalReversed")) {
+            grille[d.getPosition()[0]][d.getPosition()[1]] = d.getExtremiteGauche();
+            grille[d.getPosition()[0] - 1][d.getPosition()[1]] = d.getExtremiteDroite();
+        }
         d.setEstPoser(true);
     }
 

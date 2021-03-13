@@ -4,8 +4,8 @@ import model.pieces.cases.Case;
 
 public class Domino {
 
-    private Case extremiteGauche;
-    private Case extremiteDroite;
+    private final Case extremiteGauche;
+    private final Case extremiteDroite;
     private boolean estPoser;
     private final int numeroDomino;
     private int[] position;
@@ -63,12 +63,4 @@ public class Domino {
                  this.getExtremiteDroite().getPaysage().getNbCouronnes() +"]";
     }
 
-    /***
-     * Méthode qui permet d'inverser les extremités du Domino.
-     */
-    public void reverseExtremite() {
-        Case tmp = extremiteDroite;
-        this.extremiteDroite = extremiteGauche;
-        this.extremiteGauche = tmp;
-    }
 }
