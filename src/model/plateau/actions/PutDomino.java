@@ -22,7 +22,7 @@ public class PutDomino implements IPut {
      */
     public PutDomino(Grille grille, Domino domino, String orientation, int[] position) {
         this.grille = grille;
-        this.domino = new Domino(domino.getExtremiteGauche(), domino.getExtremiteDroite(), domino.getNumeroDomino());
+        this.domino = domino;
         this.orientation = orientation;
         this.position=position;
     }

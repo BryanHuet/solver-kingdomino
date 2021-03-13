@@ -14,7 +14,7 @@ public class Grille{
     private final int nbColonne;
     private final Case[][] grille;
     // Sauvegarde
-    private Case castle;
+    private Castle castle;
 
     /***
      *
@@ -114,7 +114,7 @@ public class Grille{
      * Setters
      *
      */
-    public void setCastle(Case castle) {
+    public void setCastle(Castle castle) {
         setCase(new int[]{castle.getPosition()[0], castle.getPosition()[1]}, castle);
         this.castle = castle; // save
     }

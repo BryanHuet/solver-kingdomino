@@ -17,8 +17,8 @@ public class DominoFactory {
     public static Domino getDomino(int id) {
         if (id >= 0 && id <= 47) {
             List<String> listOfDomino = CsvParser.parse().get(id);
-            Case case1 = new ExtremiteDomino(new Paysage(listOfDomino.get(1), Integer.parseInt(listOfDomino.get(5))), listOfDomino.get(7).substring(0, 3));
-            Case case2 = new ExtremiteDomino(new Paysage(listOfDomino.get(3), Integer.parseInt(listOfDomino.get(6))), listOfDomino.get(8).substring(0, 3));
+            ExtremiteDomino case1 = new ExtremiteDomino(new Paysage(listOfDomino.get(1), Integer.parseInt(listOfDomino.get(5))), listOfDomino.get(7).substring(0, 3));
+            ExtremiteDomino case2 = new ExtremiteDomino(new Paysage(listOfDomino.get(3), Integer.parseInt(listOfDomino.get(6))), listOfDomino.get(8).substring(0, 3));
             return new Domino(case1, case2, Integer.parseInt(listOfDomino.get(0)));
         }
         System.out.println("Identifiant de domino mauvais, un aléatoire a été généré. ");

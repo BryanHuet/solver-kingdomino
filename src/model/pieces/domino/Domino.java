@@ -1,11 +1,12 @@
 package model.pieces.domino;
 
 import model.pieces.cases.Case;
+import model.pieces.cases.ExtremiteDomino;
 
 public class Domino {
 
-    private final Case extremiteGauche;
-    private final Case extremiteDroite;
+    private final ExtremiteDomino extremiteGauche;
+    private final ExtremiteDomino extremiteDroite;
     private boolean estPoser;
     private final int numeroDomino;
     private int[] position;
@@ -16,7 +17,7 @@ public class Domino {
      * @param extremiteDroite Extremité droite du Domino.
      * @param numeroDomino Le numéro du domino.
      */
-    public Domino(Case extremiteGauche, Case extremiteDroite, int numeroDomino) {
+    public Domino(ExtremiteDomino extremiteGauche, ExtremiteDomino extremiteDroite, int numeroDomino) {
         this.extremiteGauche = extremiteGauche;
         this.extremiteDroite = extremiteDroite;
         this.numeroDomino = numeroDomino;
@@ -26,11 +27,11 @@ public class Domino {
     /***
      * Getters
      */
-    public Case getExtremiteGauche() {
+    public ExtremiteDomino getExtremiteGauche() {
         return extremiteGauche;
     }
 
-    public Case getExtremiteDroite() {
+    public ExtremiteDomino getExtremiteDroite() {
         return extremiteDroite;
     }
 

@@ -7,7 +7,7 @@ import model.plateau.Grille;
 public class PutCastle implements IPut {
 
     private final Grille grille;
-    private final Case castle;
+    private final Castle castle;
     private int[] position;
 
     /***
