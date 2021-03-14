@@ -13,7 +13,7 @@ public class State {
     private Kingdomino game;
     private HashMap<Player, Grille> savesGrid;
     private Deck deck;
-    private Player actualPayer =null;
+    private Player actualPayer;
 
 
     public State(Kingdomino game){

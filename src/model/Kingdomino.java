@@ -90,10 +90,8 @@ public class Kingdomino {
                     System.out.println();
                     Scanner myObj2 = new Scanner(System.in);
                     int position = myObj2.nextInt();
-                    p.play(p.actionsPossible(justTest).get(position));
+                    //p.play(p.actionsPossible(justTest).get(position));
 
-                }else{
-                    p.play(p.playAi());
                 }
                 p.getPlateau().afficheGrille();
                 System.out.println("Votre score est de :"+ p.getScore());
@@ -126,8 +124,8 @@ public class Kingdomino {
     public static void main(String[] args){
 
         Kingdomino game = new Kingdomino();
-        Player one = new Player(1);
-        Player two = new Player(2);
+        Player one = new Human(1);
+        Player two = new Human(2);
         game.addPlayer(one);
         game.addPlayer(two);
         game.start();

@@ -8,27 +8,31 @@ import model.pieces.cases.Castle;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
 
-public class Robot extends Player{
+public class Robot extends Human implements Player{
 
-    private Kingdomino game;
-    private int depth;
+    private Strategy strategy;
 
-    public Robot(int id, Kingdomino game, int depth) {
+    public Robot(int id) {
         super(id);
-        this.game=game;
-        this.depth = depth;
+    }
+
+    public void setStrategy(Strategy strategy){
+        this.strategy=strategy;
     }
 
     public IPut playAi(Strategy strategy){
         return strategy.resolution();
     }
 
+    public IPut play(){
+        return this.strategy.resolution();
+    }
 
     public static void main(String[] args){
 
         Kingdomino game=new Kingdomino();
-        Robot a = new Robot(4,game,2);
-        Robot b = new Robot(6,game,1);
+        Robot a = new Robot(4);
+        Robot b = new Robot(6);
         game.addPlayer(a);
         //game.addPlayer(b);
         Castle castle = new Castle();
@@ -49,7 +53,7 @@ public class Robot extends Player{
             if(!a.getCanPlay()){
                 break;
             }
-            a.play(action);
+            a.playb(action);
             a.getPlateau().afficheGrille();
             System.out.println("score a = "+a.getScore());
             /*
