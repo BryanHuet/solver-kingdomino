@@ -1,3 +1,5 @@
+import model.Kingdomino;
+import model.ia.Random;
 import model.pieces.cases.Castle;
 import model.pieces.domino.Domino;
 import model.pieces.domino.DominoFactory;
@@ -5,9 +7,26 @@ import model.plateau.Grille;
 import model.plateau.Score;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
+import model.player.Robot;
 
 public class Main{
   public static void main(String[] args) {
+
+
+      Kingdomino game = new Kingdomino();
+      Robot robot = new Robot(game, new Random(game));
+      robot.getPlateau().afficheGrille();
+      game.addPlayer(robot);
+
+      game.start();
+
+
+
+
+
+
+
+
 
       /*
       Kingdomino game = new Kingdomino();
@@ -48,7 +67,7 @@ public class Main{
       grille.afficheGrille();
 
        */
-
+/*
       // Grille et chateau
       Grille grille = new Grille(5,5);
       Castle castle = new Castle();
@@ -101,6 +120,6 @@ public class Main{
       grille.afficheGrille();
 
       Score s = new Score(grille);
-      System.out.println(s.calculateScore());
+      System.out.println(s.calculateScore());*/
   }
 }

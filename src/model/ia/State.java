@@ -1,7 +1,8 @@
 package model.ia;
 
 import model.Kingdomino;
-import model.Player;
+import model.player.Nature;
+import model.player.Player;
 import model.pieces.domino.Domino;
 import model.plateau.Deck;
 import model.plateau.Grille;
@@ -21,6 +22,7 @@ public class State {
         this.savesGrid =new HashMap<>();
         this.deck = new Deck(game.getDeck().getSize(),true);
         for (Player p: game.getPlayers()) {
+            if (! (p instanceof Nature)){
             Grille grille = new Grille(p.getPlateau().getNbLigne(), p.getPlateau().getNbColonne());
             for (int i = 0; i < p.getPlateau().getNbLigne(); i++) {
                 for (int j = 0; j < p.getPlateau().getNbColonne(); j++) {
@@ -28,6 +30,7 @@ public class State {
                 }
             }
             this.savesGrid.put(p,grille);
+            }
         }
 
         for (Domino d: game.getDeck().getDominos()) {
@@ -53,6 +56,14 @@ public class State {
 
     public void setActualPayer(Player actualPayer) {
         this.actualPayer = actualPayer;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        if (! (object instanceof State)){
+            return false;
+        }
+        return this.getActualPayer() == ((State) object).getActualPayer() && this.getSavesGrid() == ((State) object).getSavesGrid();
     }
 
 

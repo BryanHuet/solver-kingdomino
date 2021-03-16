@@ -1,5 +1,6 @@
-package model;
+package model.player;
 
+import model.Kingdomino;
 import model.pieces.domino.Domino;
 import model.plateau.Grille;
 import model.plateau.Score;
@@ -7,7 +8,6 @@ import model.plateau.actions.IPut;
 import model.plateau.actions.PutDomino;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Human implements Player{
 
@@ -15,10 +15,11 @@ public class Human implements Player{
     private int score;
     private Grille plateau;
     private boolean canplay = true;
+    private Kingdomino game;
 
 
-    public Human(int id){
-        this.id = id;
+    public Human(Kingdomino game){
+        this.game=game;
         this.plateau = new Grille(5,5);
     }
 
@@ -38,8 +39,12 @@ public class Human implements Player{
         this.plateau = plateau;
     }
 
-    public ArrayList<PutDomino> actionsPossible(ArrayList<Domino> dominos){
-        ArrayList<PutDomino> coups = new ArrayList<>();
+    public Kingdomino getGame() {
+        return game;
+    }
+
+    public ArrayList<IPut> actionsPossible(ArrayList<Domino> dominos){
+        ArrayList<IPut> coups = new ArrayList<>();
         for (int i = 0; i < this.getPlateau().getNbLigne(); i++) {
             for (int j = 0; j < this.getPlateau().getNbColonne(); j++) {
                 for (Domino d : dominos){
@@ -71,8 +76,8 @@ public class Human implements Player{
         return this.canplay;
     }
 
-    public IPut play(){
-        return null;
+    public void play(){
+
     }
 
     public void playb(IPut action){
@@ -84,5 +89,4 @@ public class Human implements Player{
         Score score = new Score(plateau);
         return score.calculateScore();
     }
-
 }

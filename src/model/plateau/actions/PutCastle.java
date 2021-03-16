@@ -44,6 +44,10 @@ public class PutCastle implements IPut {
         return !grille.isOutofBound(position[0],position[1]);
     }
 
+    @Override
+    public void setGrille(Grille grille) {
+
+    }
 
 
 }

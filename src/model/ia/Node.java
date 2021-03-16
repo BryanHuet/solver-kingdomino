@@ -1,6 +1,6 @@
 package model.ia;
 
-import model.Player;
+import model.player.Player;
 import model.plateau.Score;
 
 import java.util.HashSet;
@@ -40,6 +40,15 @@ public class Node {
 
     public void addChild(Node child){
         this.child.add(child);
+    }
+
+    @Override
+    public boolean equals(Object object){
+        if(! (object instanceof Node)){
+            return false;
+        }
+        return this.heuristic == ((Node) object).getHeuristic() && this.player == ((Node) object).getPlayer()
+                && this.state == ((Node) object).getState();
     }
 
     public String toString(){

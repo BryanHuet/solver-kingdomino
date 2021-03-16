@@ -1,11 +1,14 @@
 package model.ia;
 import model.Kingdomino;
-import model.Player;
-import model.plateau.Score;
+import model.player.Nature;
+import model.player.Player;
+import model.pieces.domino.Domino;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutDomino;
 
 import java.lang.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Expectiminimax implements Strategy{
@@ -22,24 +25,26 @@ public class Expectiminimax implements Strategy{
 
 
     public float calcul(Node root,int depth){
-        float a;
+        float a=0;
         if(root.getChild().isEmpty() || depth == 0){
             return root.getHeuristic();
         }
-        if(root.getPlayer()!=this.player){
-            a=Float.POSITIVE_INFINITY;
-            for(Node child: root.getChild()) {
-                a = Math.min(a, calcul(child,depth-1));
-            }
-        }else if(root.getPlayer()==this.player){
-            a=-Float.NEGATIVE_INFINITY;
-            for(Node child: root.getChild()) {
-                a = Math.max(a, calcul(child,depth-1));
+        if(! (root.getPlayer() instanceof Nature))
+          {
+            if(root.getPlayer()!=this.player){
+                a=Float.POSITIVE_INFINITY;
+                for(Node child: root.getChild()) {
+                    a = Math.min(a, calcul(child,depth-1));
+                }
+            }else if(root.getPlayer()==this.player){
+                a=-Float.NEGATIVE_INFINITY;
+                for(Node child: root.getChild()) {
+                    a = Math.max(a, calcul(child,depth-1));
+                }
             }
         }else{
-            a = 0;
             for(Node child: root.getChild()) {
-                a += proba(child)* calcul(child,depth-1);
+                a += /*proba(child)* */ calcul(child,depth-1);
             }
         }
         return a;
@@ -49,77 +54,150 @@ public class Expectiminimax implements Strategy{
     // -->
     public float proba(Node node) {
 
-        switch (Score.getTheMostPaysage(node.getPlayer().getPlateau())) {
-            case "wheat":
-                return (float) node.getState().getGame().getDeck().getRemainingCase().get("wheat") / node.getState().getGame().getDeck().getSize();
-            case "forest":
-                return (float) node.getState().getGame().getDeck().getRemainingCase().get("forest") / node.getState().getGame().getDeck().getSize();
-            case "water":
-                return (float) node.getState().getGame().getDeck().getRemainingCase().get("water") / node.getState().getGame().getDeck().getSize();
-            case "grass":
-                return (float) node.getState().getGame().getDeck().getRemainingCase().get("grass") / node.getState().getGame().getDeck().getSize();
-            case "swamp":
-                return (float) node.getState().getGame().getDeck().getRemainingCase().get("swamp") / node.getState().getGame().getDeck().getSize();
-            case "mine":
-                return (float) node.getState().getGame().getDeck().getRemainingCase().get("mine") / node.getState().getGame().getDeck().getSize();
-            default:
-                return (float) 0.0;
+        HashMap<Node,Float> nodes = new HashMap<>();
+        //parcours de tout les dominos présent dans le deck et création de tout les noeuds possibles.
+        for (int i = 0; i < this.player.getPlateau().getNbLigne(); i++) {
+            for (int j = 0; j < this.player.getPlateau().getNbColonne(); j++) {
+                for (Domino d : this.game.getDeck().getDominos()) {
+                    PutDomino actionh = new PutDomino(this.player.getPlateau(), d, "horizontal", new int[]{i, j});
+                    PutDomino actionhr = new PutDomino(this.player.getPlateau(), d, "horizontalReversed", new int[]{i, j});
+                    PutDomino actionv = new PutDomino(this.player.getPlateau(), d, "vertical", new int[]{i, j});
+                    PutDomino actionvr = new PutDomino(this.player.getPlateau(), d, "verticalReversed", new int[]{i, j});
+                    if (actionh.isValid()) {
+                        State stateh = new State(game);
+                        actionh.setGrille(stateh.getSavesGrid().get(this.player));
+                        stateh.getGame().move(actionh);
+                        nodes.put(new Node(this.player, stateh),1/(float)this.game.getDeck().getDominos().size());
+                    }
+                    if (actionv.isValid()) {
+                        State statev = new State(game);
+                        actionv.setGrille(statev.getSavesGrid().get(this.player));
+                        statev.getGame().move(actionv);
+                        nodes.put(new Node(this.player, statev),1/(float)this.game.getDeck().getDominos().size());
+                    }
+                    if (actionhr.isValid()) {
+                        State statehr = new State(game);
+                        actionhr.setGrille(statehr.getSavesGrid().get(this.player));
+                        statehr.getGame().move(actionhr);
+                        nodes.put(new Node(this.player, statehr),1/(float)this.game.getDeck().getDominos().size());
+                    }
+                    if (actionvr.isValid()) {
+                        State statevr = new State(game);
+                        actionvr.setGrille(statevr.getSavesGrid().get(this.player));
+                        statevr.getGame().move(actionvr);
+                        nodes.put(new Node(this.player, statevr),1/(float)this.game.getDeck().getDominos().size());
+                    }
+                }
+            }
         }
-
+        return nodes.getOrDefault(node, 0f);
     }
 
-    public void buildGraph(Node root, int depth) {
-        Player actual = null;
-        for (Player p : root.getState().getGame().getPlayers()) {
-            if (p != root.getPlayer()) {
-                actual=p;
-            }
-        }
+    public void buildGraph(Node root, int depthness) {
 
-        if (depth > 1) {
-            //System.out.println(actual.actionsPossible(root.getState().getGame().getPick()));
-            //System.out.println("chui la");
-            for (PutDomino action : actual.actionsPossible(root.getState().getGame().getPick())) {
-                State state = new State(game);
-                state.setActualPayer(actual);
-                action.setGrille(state.getSavesGrid().get(state.getActualPayer()));
-                state.getGame().move(action);
-                Node childMin = new Node(state.getActualPayer(), state);
-                root.addChild(childMin);
-                this.buildGraph(childMin, depth - 1);
-            }
+        if (depthness > 1) {
+            Player parentPlayer = root.getPlayer();
+            if (parentPlayer.getId() != 0) {
+                for (IPut action : this.player.actionsPossible(root.getState().getGame().getPick())) {
+                    State state = new State(game);
+                    state.setActualPayer(this.player);
+                    action.setGrille(state.getSavesGrid().get(state.getActualPayer()));
+                    state.getGame().move((PutDomino) action);
+                    state.getGame().nextPlayer();
+                    Node childMin = new Node(state.getActualPayer(), state);
+                    root.addChild(childMin);
+                    this.buildGraph(childMin, depthness - 1);
+                }
+            } else {
+                for (Domino domino : root.getState().getDeck().getDominos()) {
+                    for (int i = 0; i < this.player.getPlateau().getNbLigne(); i++) {
+                        for (int j = 0; j < this.player.getPlateau().getNbColonne(); j++) {
+                            for (Domino d : this.game.getDeck().getDominos()) {
+                                PutDomino actionh = new PutDomino(this.player.getPlateau(), d, "horizontal", new int[]{i, j});
+                                PutDomino actionhr = new PutDomino(this.player.getPlateau(), d, "horizontalReversed", new int[]{i, j});
+                                PutDomino actionv = new PutDomino(this.player.getPlateau(), d, "vertical", new int[]{i, j});
+                                PutDomino actionvr = new PutDomino(this.player.getPlateau(), d, "verticalReversed", new int[]{i, j});
+                                if (actionh.isValid()) {
+                                    State stateh = new State(game);
+                                    actionh.setGrille(stateh.getSavesGrid().get(this.player));
+                                    stateh.getGame().move(actionh);
+                                    stateh.getGame().nextPlayer();
+                                    Node nodeh = new Node(this.player, stateh);
 
+                                    System.out.println(d + " "+actionh);
+                                    root.addChild(nodeh);
+                                }
+                                if (actionv.isValid()) {
+                                    State statev = new State(game);
+                                    actionv.setGrille(statev.getSavesGrid().get(this.player));
+                                    statev.getGame().move(actionv);
+                                    statev.getGame().nextPlayer();
+                                    Node nodev = new Node(this.player, statev);
+
+                                    System.out.println(d + " "+actionv);
+                                    root.addChild(nodev);
+                                }
+                                if (actionhr.isValid()) {
+                                    State statehr = new State(game);
+                                    actionhr.setGrille(statehr.getSavesGrid().get(this.player));
+                                    statehr.getGame().move(actionhr);
+                                    statehr.getGame().nextPlayer();
+                                    Node nodehr = new Node(this.player,statehr);
+                                    System.out.println(d + " "+actionhr);
+                                    root.addChild(nodehr);
+                                }
+                                if (actionvr.isValid()) {
+                                    State statevr = new State(game);
+                                    actionvr.setGrille(statevr.getSavesGrid().get(this.player));
+                                    statevr.getGame().move(actionvr);
+                                    statevr.getGame().nextPlayer();
+                                    Node nodevr=new Node(this.player, statevr);
+
+                                    System.out.println(d + " "+actionvr);
+                                    root.addChild(nodevr);
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
         }
     }
 
     @Override
-    public IPut resolution() {
+    public IPut resolution(ArrayList<IPut> actions) {
+        int cpmt=0;
         PutDomino actionChosen = null;
         float maximum = Float.NEGATIVE_INFINITY;
         HashSet<Node> roots = new HashSet<>();
-        for (PutDomino action : this.player.actionsPossible(this.game.getPick())){
+        for (IPut action : this.player.actionsPossible(this.game.getPick())){
             State state = new State(this.game);
             state.setActualPayer(this.player);
             action.setGrille(state.getSavesGrid().get(this.player));
-            this.game.move(action);
+            this.game.move((PutDomino) action);
+            this.game.nextPlayer();
             Node root = new Node(this.player,state);
             roots.add(root);
             buildGraph(root, this.depth);
 
+            //System.out.println(root);
             float expecti = (new Expectiminimax(this.player,this.depth,this.game).calcul(root,this.depth));
 
             if( expecti > maximum){
                 maximum=expecti;
-                actionChosen=action;
+                actionChosen= (PutDomino) action;
             }
         }
 
         if (actionChosen!=null){
             actionChosen.setGrille(this.player.getPlateau());
         }
-        System.out.println("choix : "+actionChosen);
         return actionChosen;
     }
+
+
+
 }
 
 /*function expectiminimax(node, depth)

@@ -1,5 +1,7 @@
 package model.plateau.actions;
 
+import model.plateau.Grille;
+
 public interface IPut {
 
     /***
@@ -12,4 +14,6 @@ public interface IPut {
      * @return Valide la possibilité de mettre une pièce.
      */
     public boolean isValid();
+
+    void setGrille(Grille grille);
 }
