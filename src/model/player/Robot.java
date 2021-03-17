@@ -11,19 +11,8 @@ public class Robot extends Human implements Player{
     private Strategy strategy;
     private int id;
 
-    public Robot(Kingdomino game, Strategy strategy) {
+    public Robot(Kingdomino game) {
         super(game);
-        this.strategy=strategy;
-    }
-
-    public void setStrategy(Strategy strategy){
-        this.strategy=strategy;
-    }
-
-    public void play(){
-        if(this.actionsPossible(this.getGame().getPick()).size()>0){
-            this.strategy.resolution(this.actionsPossible(this.getGame().getPick())).put();
-        }
     }
 
     @Override
@@ -31,6 +20,27 @@ public class Robot extends Human implements Player{
         this.id=id;
     }
 
+    public Strategy getStrategy() {
+        return strategy;
+    }
 
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
 
+    public void play(){
+        if(!(this.strategy ==null)){
+            if(this.actionsPossible(this.getGame().getPick()).size()>0){
+                IPut action = this.strategy.resolution(this.actionsPossible(this.getGame().getPick()));
+                action.put();
+                this.getGame().getPick().remove(action.getDomino());
+            }
+        }else{
+            System.out.println("Le robot n'a de statégie");
+        }
+    }
+    @Override
+    public String toString(){
+        return "Robot "+this.id+" utilisant une strategie "+this.strategy;
+    }
 }

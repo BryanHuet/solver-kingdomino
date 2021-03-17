@@ -1,5 +1,6 @@
 package model.plateau.actions;
 
+import model.pieces.domino.Domino;
 import model.plateau.Grille;
 
 public interface IPut {
@@ -16,4 +17,5 @@ public interface IPut {
     public boolean isValid();
 
     void setGrille(Grille grille);
+    Domino getDomino();
 }

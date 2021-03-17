@@ -92,7 +92,9 @@ public class Score {
     public int calculateVerifiedCases(ArrayList<Case> verifiedCases)
     {
         int score = 0;
-
+        if(grille == null){
+            return 0;
+        }
         for (int i = 0; i < grille.getNbLigne(); i++)
             for (int j = 0; j < grille.getNbColonne(); j++) {
                 Case c = this.grille.getCaseBis(i,j);
@@ -120,6 +122,9 @@ public class Score {
      */
     public boolean checkPointBonus() {
         boolean checker = true;
+        if(grille == null){
+            return false;
+        }
         for (int i = 0; i < grille.getNbLigne(); i++) {
             for (int j = 0; j < grille.getNbColonne(); j++) {
                 if (grille.getCaseBis(i,j).isOccuped() == false) {

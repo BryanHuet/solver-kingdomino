@@ -20,4 +20,10 @@ public class Random implements Strategy {
     public IPut resolution(ArrayList<IPut> actions) {
         return actions.get((int) (Math.random() * actions.size()));
     }
+
+
+    @Override
+    public String toString(){
+        return "Random";
+    }
 }

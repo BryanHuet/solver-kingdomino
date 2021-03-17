@@ -17,10 +17,11 @@ public class State {
     private Player actualPayer;
 
 
-    public State(Kingdomino game){
+    public State(Kingdomino game, Player player){
         this.game=game;
         this.savesGrid =new HashMap<>();
         this.deck = new Deck(game.getDeck().getSize(),true);
+        this.actualPayer=player;
         for (Player p: game.getPlayers()) {
             if (! (p instanceof Nature)){
             Grille grille = new Grille(p.getPlateau().getNbLigne(), p.getPlateau().getNbColonne());
@@ -58,6 +59,17 @@ public class State {
         this.actualPayer = actualPayer;
     }
 
+    public void nextPlayer(){
+        int idNextPlayer = this.actualPayer.getId()+1;
+        while(this.getGame().getPlayers().get(idNextPlayer)==this.actualPayer){
+
+            idNextPlayer=idNextPlayer+1;
+            if(idNextPlayer>=this.getGame().getPlayers().size()){
+                idNextPlayer=0;
+            }
+        }
+        this.actualPayer=this.getGame().getPlayers().get(idNextPlayer);
+    }
     @Override
     public boolean equals(Object object){
         if (! (object instanceof State)){

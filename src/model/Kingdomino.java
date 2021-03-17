@@ -29,7 +29,29 @@ public class Kingdomino {
 
     }
 
+/*
+---------------------------------------------------------------------------------------------------------------------
+                                    GETTER/SETTER
+---------------------------------------------------------------------------------------------------------------------
+*/
+    public ArrayList<Domino> getPick() { return this.pick; }
+
+    public ArrayList<Player> getPlayers() { return players; }
+
+    public Player getCurrentPlayer() { return currentPlayer; }
+
+    public Deck getDeck() {
+        return this.deck;
+    }
+
+
+/*
+---------------------------------------------------------------------------------------------------------------------
+                                    METHODES
+---------------------------------------------------------------------------------------------------------------------
+*/
     public void pick(){
+        //System.out.println(this.deck.getDominos().size());
         if(this.players.size()-1<=0){
             System.out.println("aucun joueur, donc aucun domino n'est tiré");
         }
@@ -37,7 +59,7 @@ public class Kingdomino {
             this.pick.clear();
         }
         if(this.getDeck().getDominos().size()>=this.players.size()+1){
-            for(int i = 0;i<this.players.size()+1;i++){
+            for(int i = 0;i<this.players.size()-1;i++){
                 Random random = new Random();
                 int nb;
                 nb = random.nextInt(this.deck.getDominos().size());
@@ -55,6 +77,18 @@ public class Kingdomino {
         this.currentPlayer=this.players.get(idNextPlayer);
     }
 
+    public void move(IPut action){
+        action.put();
+        this.pick.remove(action.getDomino());
+    }
+
+    public void addPlayer(Player player){
+        player.setId(this.players.size());
+        players.add(player);
+        this.currentPlayer=player;
+    }
+
+// Boucle de jeu
     public void start(){
         System.out.println("Debut du jeu");
         for(Player p : this.players){
@@ -82,66 +116,20 @@ public class Kingdomino {
                 this.currentPlayer=p;
                 p.play();
                 if(! (p instanceof Nature)){
-                p.getPlateau().afficheGrille();
-                }
-/*
-                if (p instanceof Human){
-                    int j=0;
-                    for(Domino d : this.pick){
-                        System.out.print(j+" "+d+"|");
-                        j=j+1;
-                    }
-                    System.out.println("\nVeuillez choisir un domino");
-                    Scanner myObj = new Scanner(System.in);
-                    int idDomino = myObj.nextInt();
-                    Domino chosen = this.pick.get(idDomino);
-                    ArrayList<Domino> justTest = new ArrayList<>();
-                    justTest.add(chosen);
-                    this.pick.remove(this.pick.get(idDomino));
-                    System.out.println("Veuillez choisir une action");
-                    int i=0;
-                    for (IPut action: p.actionsPossible(justTest)){
-                        System.out.print(i+" "+action+" | ");
-                        if (i%2==0){
-                            System.out.println();
-                        }
-                        i=i+1;
-                    }
-                    System.out.println();
-                    Scanner myObj2 = new Scanner(System.in);
-                    int position = myObj2.nextInt();
-                    //p.play(p.actionsPossible(justTest).get(position));
-
+                    System.out.println("Grille du joueur : "+p);
                     p.getPlateau().afficheGrille();
-                    System.out.println("Votre score est de :"+ p.getScore());
-                }*/
+                    System.out.println("Le score du joueur est :"+ p.getScore());
+                    System.out.println();
+                }
             }
 
             this.pick.clear();
-
 
             n=n+1;
         }
     }
 
-    public void move(PutDomino action){
-        action.put();
-        this.pick.remove(action.getDomino());
-    }
 
-    //methode clone
-
-    public Deck getDeck() {
-        return this.deck;
-    }
-    public void addPlayer(Player player){
-        players.add(player);
-        player.setId(this.players.size());
-        this.currentPlayer=player;
-    }
-    public ArrayList<Domino> getPick() { return this.pick; }
-    public ArrayList<Player> getPlayers() { return players; }
-    public Player getCurrentPlayer() { return currentPlayer; }
 
 
 }

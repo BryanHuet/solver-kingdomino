@@ -8,13 +8,13 @@ import model.plateau.actions.IPut;
 import model.plateau.actions.PutDomino;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Human implements Player{
 
     private int id;
     private int score;
     private Grille plateau;
-    private boolean canplay = true;
     private Kingdomino game;
 
 
@@ -23,6 +23,11 @@ public class Human implements Player{
         this.plateau = new Grille(5,5);
     }
 
+/*
+---------------------------------------------------------------------------------------------------------------------
+                                        GETTER/SETTER
+---------------------------------------------------------------------------------------------------------------------
+*/
     public int getId() {
         return this.id;
     }
@@ -42,6 +47,17 @@ public class Human implements Player{
     public Kingdomino getGame() {
         return game;
     }
+
+    public int getScore() {
+        Score score = new Score(plateau);
+        return score.calculateScore();
+    }
+
+/*
+---------------------------------------------------------------------------------------------------------------------
+                                        METHODES
+---------------------------------------------------------------------------------------------------------------------
+*/
 
     public ArrayList<IPut> actionsPossible(ArrayList<Domino> dominos){
         ArrayList<IPut> coups = new ArrayList<>();
@@ -67,26 +83,40 @@ public class Human implements Player{
                 }
             }
         }
-        if(coups.size()==0){
-            this.canplay=false;
-        }
         return coups;
-    }
-    public boolean getCanPlay(){
-        return this.canplay;
     }
 
     public void play(){
+        int j=0;
+        for(Domino d : this.getGame().getPick()){
+            System.out.print(j+" "+d+"|");
+            j=j+1;
+        }
+        System.out.println("\nVeuillez choisir un domino");
+        Scanner myObj = new Scanner(System.in);
+        int idDomino = myObj.nextInt();
+        Domino chosen = this.getGame().getPick().get(idDomino);
+        ArrayList<Domino> justTest = new ArrayList<>();
+        justTest.add(chosen);
+        this.getGame().getPick().remove(this.getGame().getPick().get(idDomino));
+        System.out.println("Veuillez choisir une action");
+        int i=0;
+        for (IPut action: this.actionsPossible(justTest)){
+            System.out.print(i+" "+action+" | ");
+            if (i%2==0){
+                System.out.println();
+            }
+            i=i+1;
+        }
+        System.out.println();
+        Scanner myObj2 = new Scanner(System.in);
+        int position = myObj2.nextInt();
+        this.actionsPossible(justTest).get(position).put();
 
     }
 
-    public void playb(IPut action){
-        action.put();
-    }
-    public IPut playAi(){return null;}
-
-    public int getScore() {
-        Score score = new Score(plateau);
-        return score.calculateScore();
+    @Override
+    public String toString(){
+        return "Humain "+this.id;
     }
 }

@@ -2,6 +2,7 @@ package model.plateau.actions;
 
 import model.pieces.cases.Case;
 import model.pieces.cases.Castle;
+import model.pieces.domino.Domino;
 import model.plateau.Grille;
 
 public class PutCastle implements IPut {
@@ -46,7 +47,11 @@ public class PutCastle implements IPut {
 
     @Override
     public void setGrille(Grille grille) {
+    }
 
+    @Override
+    public Domino getDomino() {
+        return null;
     }
 
 
