@@ -5,7 +5,11 @@ import model.pieces.cases.Castle;
 import model.pieces.cases.Paysage;
 import model.pieces.cases.Vide;
 import model.pieces.domino.Domino;
+import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
+import model.plateau.actions.PutDomino;
+
+import java.util.ArrayList;
 
 public class Grille{
 
@@ -138,6 +142,34 @@ public class Grille{
             grille[d.getPosition()[0] - 1][d.getPosition()[1]] = d.getExtremiteDroite();
         }
         d.setEstPoser(true);
+    }
+
+    //METTRE ça dans grille -> plus interessant + plus propre.
+    public ArrayList<IPut> actionsPossible(ArrayList<Domino> dominos){
+        ArrayList<IPut> coups = new ArrayList<>();
+        for (int i = 0; i < this.getNbLigne(); i++) {
+            for (int j = 0; j < this.getNbColonne(); j++) {
+                for (Domino d : dominos){
+                    PutDomino actionh = new PutDomino(this,d,"horizontal",new int[]{i,j});
+                    PutDomino actionhr = new PutDomino(this,d,"horizontalReversed",new int[]{i,j});
+                    PutDomino actionv = new PutDomino(this,d,"vertical",new int[]{i,j});
+                    PutDomino actionvr = new PutDomino(this,d,"verticalReversed",new int[]{i,j});
+                    if(actionh.isValid()){
+                        coups.add(actionh);
+                    }
+                    if (actionv.isValid()){
+                        coups.add(actionv);
+                    }
+                    if(actionhr.isValid()){
+                        coups.add(actionhr);
+                    }
+                    if (actionvr.isValid()){
+                        coups.add(actionvr);
+                    }
+                }
+            }
+        }
+        return coups;
     }
 
 }

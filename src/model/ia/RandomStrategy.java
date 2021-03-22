@@ -2,16 +2,15 @@ package model.ia;
 
 import model.Kingdomino;
 import model.plateau.actions.IPut;
-import model.player.Player;
 
 import java.util.ArrayList;
 
 
-public class Random implements Strategy {
+public class RandomStrategy implements Strategy {
 
     private Kingdomino game;
 
-    public Random(Kingdomino game){
+    public RandomStrategy(Kingdomino game){
         this.game = game;
     }
 

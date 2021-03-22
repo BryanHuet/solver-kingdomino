@@ -7,10 +7,10 @@ import model.plateau.actions.PutDomino;
 
 import java.util.ArrayList;
 
+//go classe abstraite.
 public interface Player {
-    void play();
+    boolean play();
     Grille getPlateau();
-    ArrayList<IPut> actionsPossible(ArrayList<Domino> dominos);
     int getScore();
     int getId();
     void setId(int id);

@@ -11,7 +11,7 @@ public class Node {
     private State state;
     private HashSet<Node> child;
     private int heuristic;
-
+    private boolean isChance=false;
 
     public Node(Player player, State state){
         this.player = player;
@@ -40,6 +40,14 @@ public class Node {
 
     public void addChild(Node child){
         this.child.add(child);
+    }
+
+    public boolean isChance() {
+        return isChance;
+    }
+
+    public void setChance(){
+        this.isChance=true;
     }
 
     @Override
