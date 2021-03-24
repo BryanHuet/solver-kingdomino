@@ -50,7 +50,7 @@ public class Deck {
             throw new Exception("number is not a valid number.");
         }
         if(getDominos().size()>=number+1){
-            for(int i = 0;i<number-1;i++){
+            for(int i = 0;i<number;i++){
                 Random random = new Random();
                 int nb;
                 nb = random.nextInt(getDominos().size());
@@ -58,7 +58,6 @@ public class Deck {
                 removeDomino(getDominos().get(nb));
             }
         }
-
         return picks;
     }
 

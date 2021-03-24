@@ -3,6 +3,7 @@ package model.player;
 import model.Kingdomino;
 import model.plateau.Grille;
 import model.plateau.Score;
+import model.plateau.actions.IPut;
 
 public abstract class AbstractPlayer implements Player{
 

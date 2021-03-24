@@ -8,6 +8,7 @@ import model.pieces.domino.Domino;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
 import model.plateau.actions.PutDomino;
+import model.plateau.actions.PutSkipped;
 
 import java.util.ArrayList;
 
@@ -103,6 +104,7 @@ public class Grille{
     }
 
     public Case getCastle() {
+        /*
         if (castle != null) {
             return castle;
         }
@@ -111,6 +113,7 @@ public class Grille{
             PutCastle pCastle = new PutCastle(this, new Castle(), new int[] {(int) nbLigne / 2, (int) nbColonne / 2});
             pCastle.put();
         }
+        */
         return castle;
     }
 
@@ -144,31 +147,40 @@ public class Grille{
         d.setEstPoser(true);
     }
 
-    //METTRE ça dans grille -> plus interessant + plus propre.
     public ArrayList<IPut> actionsPossible(ArrayList<Domino> dominos){
         ArrayList<IPut> coups = new ArrayList<>();
+        if(dominos.isEmpty()){
+            return null;
+        }
         for (int i = 0; i < this.getNbLigne(); i++) {
             for (int j = 0; j < this.getNbColonne(); j++) {
-                for (Domino d : dominos){
-                    PutDomino actionh = new PutDomino(this,d,"horizontal",new int[]{i,j});
-                    PutDomino actionhr = new PutDomino(this,d,"horizontalReversed",new int[]{i,j});
-                    PutDomino actionv = new PutDomino(this,d,"vertical",new int[]{i,j});
-                    PutDomino actionvr = new PutDomino(this,d,"verticalReversed",new int[]{i,j});
-                    if(actionh.isValid()){
-                        coups.add(actionh);
+                if(this.castle!=null){
+                    for (Domino d : dominos){
+                        PutDomino actionh = new PutDomino(this,d,"horizontal",new int[]{i,j});
+                        PutDomino actionhr = new PutDomino(this,d,"horizontalReversed",new int[]{i,j});
+                        PutDomino actionv = new PutDomino(this,d,"vertical",new int[]{i,j});
+                        PutDomino actionvr = new PutDomino(this,d,"verticalReversed",new int[]{i,j});
+                        if(actionh.isValid()){
+                            coups.add(actionh);
+                        }
+                        if (actionv.isValid()){
+                            coups.add(actionv);
+                        }
+                        if(actionhr.isValid()){
+                            coups.add(actionhr);
+                        }
+                        if (actionvr.isValid()){
+                            coups.add(actionvr);
+                        }
                     }
-                    if (actionv.isValid()){
-                        coups.add(actionv);
-                    }
-                    if(actionhr.isValid()){
-                        coups.add(actionhr);
-                    }
-                    if (actionvr.isValid()){
-                        coups.add(actionvr);
-                    }
+                }else{
+                    PutCastle actionCastle = new PutCastle(this,new Castle(),new int[]{i,j});
+                    coups.add(actionCastle);
                 }
             }
         }
+        PutSkipped actionSkipped = new PutSkipped();
+        coups.add(actionSkipped);
         return coups;
     }
 

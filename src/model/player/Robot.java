@@ -7,6 +7,7 @@ import model.plateau.actions.IPut;
 public class Robot extends AbstractPlayer implements Player{
 
     private Strategy strategy;
+    private IPut lastAction;
 
     public Robot(Kingdomino game) {
         super(game);
@@ -17,17 +18,26 @@ public class Robot extends AbstractPlayer implements Player{
     }
 
     public boolean play(){
-        if(!(this.strategy ==null)){
-            if(this.getPlateau().actionsPossible(this.getGame().getPick()).size()>0){
+        if(!(this.strategy == null)){
+            if( ! (this.getPlateau().actionsPossible(this.getGame().getPick()) == null)
+                    && this.getPlateau().actionsPossible(this.getGame().getPick()).size()>0){
                 IPut action = this.strategy.resolution(this.getPlateau().actionsPossible(this.getGame().getPick()));
+                this.lastAction = action;
                 getGame().move(action);
+                System.out.println("action choisi : "+action);
+                return true;
             }else{
                 return false;
             }
         }else{ // -> renvoyer une exception
             System.out.println("Le robot n'a pas de statégie");
         }
-        return true;
+        return false;
+    }
+
+    @Override
+    public IPut getLastAction() {
+        return this.lastAction;
     }
 
     @Override

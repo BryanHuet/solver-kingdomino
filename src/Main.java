@@ -9,19 +9,21 @@ import model.player.Robot;
 public class Main{
   public static void main(String[] args) {
 
-/*
+
       Kingdomino game = new Kingdomino();
+      Human human = new Human(game);
       Robot robot = new Robot(game);
-      robot.setStrategy(new Expectiminimax(robot,3,game));
-      Robot robot2 = new Robot(game);
-      robot2.setStrategy(new RandomStrategy(game));
+      robot.setStrategy(new RandomStrategy(game));
+      //Robot robot2 = new Robot(game);
+      //robot2.setStrategy(new RandomStrategy(game));
       game.addPlayer(robot);
-      //parcours de tout les dominos présent dans le deck et création de tout les noeuds possibles.
+      //game.addPlayer(robot2);
+      game.addPlayer(human);
 
 
       game.start();
-*/
 
+/*
 
       Kingdomino game=new Kingdomino();
 
@@ -44,6 +46,8 @@ public class Main{
           a.getPlateau().afficheGrille();
           System.out.println("score = "+a.getScore());
       }
+
+      */
 
   }
 }

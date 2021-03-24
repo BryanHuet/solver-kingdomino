@@ -1,15 +1,12 @@
 package model.player;
 
 import model.Kingdomino;
-import model.pieces.domino.Domino;
-import model.plateau.actions.IPut;
 import control.InputHuman;
-import java.util.ArrayList;
-import java.util.Scanner;
+import model.plateau.actions.IPut;
 
 public class Human extends AbstractPlayer implements Player{
 
-
+    private IPut lastAction;
 
     public Human(Kingdomino game){
         super(game);
@@ -18,8 +15,15 @@ public class Human extends AbstractPlayer implements Player{
 
     //-> ne pas modifier des choses dans games
     public boolean play(){
-        InputHuman.chooseAction(this).put();
+        IPut action = InputHuman.chooseAction(this);
+        this.lastAction = action;
+        getGame().move(action);
         return true;
+    }
+
+    @Override
+    public IPut getLastAction() {
+        return this.lastAction;
     }
 
     @Override

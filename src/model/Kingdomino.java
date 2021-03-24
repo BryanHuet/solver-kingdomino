@@ -74,16 +74,6 @@ public class Kingdomino {
 // Boucle de jeu
     public void start(){
         System.out.println("Debut du jeu");
-        for(Player p : this.players){
-                this.currentPlayer=p;
-                System.out.println("Veuillez placer votre chateau 22 pour x=2 et y=2");
-                Scanner myObj = new Scanner(System.in);
-                String position = myObj.nextLine();
-                Castle castle = new Castle();
-                PutCastle c = new PutCastle(p.getPlateau(), castle, new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
-                c.put();
-                p.getPlateau().afficheGrille();
-        }
         int n=1;
         while(! this.terminate){
             System.out.println("============= TOUR "+n+" ==================");
@@ -91,19 +81,21 @@ public class Kingdomino {
                 this.terminate = true;
             }
             System.out.println("Tirage de la pioches");
-           // this.pick = this.deck.pick(this.players.size());
-
-
+            try{
+                this.pick = this.deck.pick(this.players.size());
+            }catch (Exception e){
+                System.err.println(e.getMessage());
+            }
+            System.out.println(this.pick);
             for(Player p : this.players){
                 this.currentPlayer=p;
-
                 if(! p.play()){
                     return;
                 }
-                    System.out.println("Grille du joueur : "+p);
-                    p.getPlateau().afficheGrille();
-                    System.out.println("Le score du joueur est :"+ p.getScore());
-                    System.out.println();
+                this.pick.remove(p.getLastAction().getDomino());
+                p.getPlateau().afficheGrille();
+                System.out.println("Le score du joueur est :"+ p.getScore());
+                System.out.println();
             }
 
             n=n+1;

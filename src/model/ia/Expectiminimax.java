@@ -65,7 +65,7 @@ public class Expectiminimax implements Strategy {
                 root.addChild(natureNode);
                 buildGraph(natureNode, depthness - 1);
             } else {
-                for (IPut action : player.actionsPossible(root.getState().getGame().getPick())) {
+                for (IPut action : player.getPlateau().actionsPossible(root.getState().getGame().getPick())) {
                     State playerState = new State(this.game, this.player);
                     action.setGrille(playerState.getSavesGrid().get(player));
                     playerState.nextPlayer();
@@ -126,7 +126,7 @@ public class Expectiminimax implements Strategy {
         IPut actionChosen = null;
         float maximum = Float.NEGATIVE_INFINITY;
 
-        for (IPut action : this.player.actionsPossible(this.game.getPick())) {
+        for (IPut action : this.player.getPlateau().actionsPossible(this.game.getPick())) {
 
             State state = new State(this.game, this.player);
             state.nextPlayer();
