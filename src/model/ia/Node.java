@@ -35,7 +35,9 @@ public class Node {
     }
 
     public int getHeuristic() {
-        return heuristic;
+
+        Score score = new Score(this.getState().getSavesGrid().get(this.player));
+        return score.calculateScore();
     }
 
     public void addChild(Node child){
@@ -61,7 +63,7 @@ public class Node {
 
     public String toString(){
         return "{"+
-                ""+this.getPlayer().getId() +" | "+this.heuristic+ "->" +this.getChild()
+                ""+ (this.getPlayer() == null ? "chance" : this.getPlayer().getId() ) +" | "+this.heuristic+ "->" +this.getChild()
                 + "}";
 
     }
