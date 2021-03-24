@@ -53,8 +53,28 @@ public class Expectiminimax implements Strategy {
 
     public void buildGraph(Node root, int depthness) {
 
-        Player player = root.getPlayer();
+        Player nextPlayer = root.getState().nextPlayer();
+        if(depthness<=0){
+            return;
+        }
 
+        if(nextPlayer == null){
+            State pickState = new State(this.game,null);
+            Node pickNode = new Node(null,pickState);
+            pickNode.setChance();
+            buildGraph(pickNode, depthness-1);
+            root.addChild(pickNode);
+        }else{
+            for(IPut action : nextPlayer.getPlateau().actionsPossible(root.getState().getGame().getPick())) {
+                State otherState = new State(this.game,nextPlayer);
+                action.setGrille(otherState.getSavesGrid().get(nextPlayer));
+                action.put();
+                Node playerNode = new Node(nextPlayer, otherState);
+                buildGraph(playerNode, depthness-1);
+                root.addChild(playerNode);
+            }
+        }
+        /*
         for (int i=0; i<depthness;i++) {
 
             for(Player other : this.game.getPlayers()){
@@ -75,7 +95,7 @@ public class Expectiminimax implements Strategy {
             root.addChild(pickNode);
             player=null;
             root=pickNode;
-        }
+        }*/
     }
 
 
@@ -92,9 +112,10 @@ public class Expectiminimax implements Strategy {
             action.put();
 
 
-            Node root = new Node(state.getActualPayer(), state);
+            Node root = new Node(this.player, state);
+            state.setCurrentPlayer(this.player);
             buildGraph(root, this.depth);
-            //System.out.println(root);
+            System.out.println(root);
 
             float expecti = (this.calcul(root, this.depth));
 

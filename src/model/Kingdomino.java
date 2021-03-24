@@ -5,7 +5,9 @@ import model.pieces.domino.Domino;
 import model.plateau.Deck;
 import model.plateau.actions.IPut;
 import model.plateau.actions.PutCastle;
+import model.player.Human;
 import model.player.Player;
+import model.player.Robot;
 
 import java.util.*;
 
@@ -15,7 +17,6 @@ public class Kingdomino {
     private ArrayList<Player> players;
     private ArrayList<Domino> pick;
     private boolean terminate=false;
-    private Player currentPlayer;
 
     public Kingdomino(){
         this.deck = new Deck(48);
@@ -32,7 +33,6 @@ public class Kingdomino {
 
     public ArrayList<Player> getPlayers() { return players; }
 
-    public Player getCurrentPlayer() { return currentPlayer; }
 
     public Deck getDeck() {
         return this.deck;
@@ -46,6 +46,8 @@ public class Kingdomino {
         return pick;
     }
 
+
+
 /*
 ---------------------------------------------------------------------------------------------------------------------
                                     METHODES
@@ -53,13 +55,7 @@ public class Kingdomino {
 */
 
 
-    public void nextPlayer(){
-        int idNextPlayer = this.currentPlayer.getId()+1;
-        if(idNextPlayer>=this.players.size()){
-            idNextPlayer=0;
-        }
-        this.currentPlayer=this.players.get(idNextPlayer);
-    }
+
 
     public void move(IPut action){
         action.put();
@@ -68,7 +64,6 @@ public class Kingdomino {
     public void addPlayer(Player player){
         player.setId(this.players.size());
         players.add(player);
-        this.currentPlayer=player;
     }
 
 // Boucle de jeu
@@ -76,7 +71,7 @@ public class Kingdomino {
         System.out.println("Debut du jeu");
         int n=1;
         while(! this.terminate){
-            System.out.println("============= TOUR "+n+" ==================");
+            System.out.println("=========================================== TOUR "+n+" ===========================================");
             if (this.deck.getDominos().size()==0){
                 this.terminate = true;
             }
@@ -87,11 +82,11 @@ public class Kingdomino {
                 System.err.println(e.getMessage());
             }
             System.out.println(this.pick);
+
             int i=1;
             for(Player p : this.players){
                 System.out.println();
                 System.out.println(i+"-------- TOUR du joueur : "+p+" --------");
-                this.currentPlayer=p;
                 if(! p.play()){
                     return;
                 }

@@ -13,14 +13,13 @@ public class State {
     private Kingdomino game;
     private HashMap<Player, Grille> savesGrid;
     private Deck deck;
-    private Player actualPayer;
-
+    private Player currentPlayer;
 
     public State(Kingdomino game, Player player){
         this.game=game;
         this.savesGrid =new HashMap<>();
         this.deck = new Deck(game.getDeck().getSize(),true);
-        this.actualPayer=player;
+        this.currentPlayer=player;
         for (Player p: game.getPlayers()) {
             Grille grille = new Grille(p.getPlateau().getNbLigne(), p.getPlateau().getNbColonne());
             for (int i = 0; i < p.getPlateau().getNbLigne(); i++) {
@@ -38,6 +37,15 @@ public class State {
 
     }
 
+    public Player nextPlayer(){
+        int idNextPlayer = this.currentPlayer == null ? 0 : this.currentPlayer.getId()+1;
+        if(idNextPlayer>=this.game.getPlayers().size()){
+            this.currentPlayer = null;
+        }else{
+            this.currentPlayer=this.game.getPlayers().get(idNextPlayer);
+        }
+        return this.currentPlayer;
+    }
     public Kingdomino getGame() { return game; }
 
     public HashMap<Player, Grille> getSavesGrid() {
@@ -48,32 +56,20 @@ public class State {
         return deck;
     }
 
-    public Player getActualPayer() {
-        return actualPayer;
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
-    public void setActualPayer(Player actualPayer) {
-        this.actualPayer = actualPayer;
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
-    public void nextPlayer(){
-        int idNextPlayer = this.actualPayer.getId()+1;
-        while(this.getGame().getPlayers().get(idNextPlayer)==this.actualPayer){
-
-            idNextPlayer=idNextPlayer+1;
-            if(idNextPlayer>=this.getGame().getPlayers().size()){
-                idNextPlayer=0;
-            }
-        }
-        this.actualPayer=this.getGame().getPlayers().get(idNextPlayer);
-    }
     @Override
     public boolean equals(Object object){
         if (! (object instanceof State)){
             return false;
         }
-        return this.getActualPayer() == ((State) object).getActualPayer() && this.getSavesGrid() == ((State) object).getSavesGrid();
+        return this.getCurrentPlayer() == ((State) object).getCurrentPlayer() && this.getSavesGrid() == ((State) object).getSavesGrid();
     }
-
 
 }
