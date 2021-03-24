@@ -87,7 +87,10 @@ public class Kingdomino {
                 System.err.println(e.getMessage());
             }
             System.out.println(this.pick);
+            int i=1;
             for(Player p : this.players){
+                System.out.println();
+                System.out.println(i+"-------- TOUR du joueur : "+p+" --------");
                 this.currentPlayer=p;
                 if(! p.play()){
                     return;
@@ -96,8 +99,8 @@ public class Kingdomino {
                 p.getPlateau().afficheGrille();
                 System.out.println("Le score du joueur est :"+ p.getScore());
                 System.out.println();
+                i=i+1;
             }
-
             n=n+1;
         }
     }

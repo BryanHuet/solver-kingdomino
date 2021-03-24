@@ -16,7 +16,11 @@ public class Main{
       robot.setStrategy(new RandomStrategy(game));
       //Robot robot2 = new Robot(game);
       //robot2.setStrategy(new RandomStrategy(game));
+      Robot expecti = new Robot(game);
+      expecti.setStrategy(new Expectiminimax(expecti,2,game));
+
       game.addPlayer(robot);
+      game.addPlayer(expecti);
       //game.addPlayer(robot2);
       game.addPlayer(human);
 

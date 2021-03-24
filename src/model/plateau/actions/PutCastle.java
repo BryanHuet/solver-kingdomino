@@ -7,7 +7,7 @@ import model.plateau.Grille;
 
 public class PutCastle implements IPut {
 
-    private final Grille grille;
+    private Grille grille;
     private final Castle castle;
     private int[] position;
 
@@ -47,11 +47,18 @@ public class PutCastle implements IPut {
 
     @Override
     public void setGrille(Grille grille) {
+        this.grille=grille;
     }
 
     @Override
     public Domino getDomino() {
         return null;
+    }
+    @Override
+    public String toString(){
+        return this.castle.toString() +  " " +
+                this.position[0] + " "
+                + this.position[1];
     }
 
 

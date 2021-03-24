@@ -23,10 +23,14 @@ public class InputHuman {
             return new PutCastle(player.getPlateau(), castle, new int[]{Integer.parseInt(""+position.charAt(0)), Integer.parseInt(position.charAt(1)+"")});
 
         }
+        System.out.println("votre grille : ");
+        player.getPlateau().afficheGrille();
+        System.out.println();
         for(Domino d : player.getGame().getPick()){
             System.out.print(j+" "+d+"|");
             j=j+1;
         }
+
         System.out.println("\nVeuillez choisir un domino");
         Scanner myObj = new Scanner(System.in);
         int idDomino = myObj.nextInt();

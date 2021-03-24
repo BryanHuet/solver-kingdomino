@@ -129,9 +129,8 @@ public class Expectiminimax implements Strategy {
         for (IPut action : this.player.getPlateau().actionsPossible(this.game.getPick())) {
 
             State state = new State(this.game, this.player);
-            state.nextPlayer();
             action.setGrille(state.getSavesGrid().get(this.player));
-            this.game.move(action);
+            action.put();
 
 
             Node root = new Node(state.getActualPayer(), state);

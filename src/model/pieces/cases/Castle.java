@@ -6,4 +6,8 @@ public class Castle extends CaseImpl {
         super(new Paysage("castle",0), "cas");
     }
 
+    @Override
+    public String toString(){
+        return "[ castle ]";
+    }
 }

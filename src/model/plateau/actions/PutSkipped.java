@@ -23,4 +23,9 @@ public class PutSkipped implements IPut {
     public Domino getDomino() {
         return null;
     }
+
+    @Override
+    public String toString(){
+        return "[action skipped]";
+    }
 }
