@@ -14,10 +14,12 @@ public class Main{
       Human human = new Human(game);
       Robot robot = new Robot(game);
       robot.setStrategy(new RandomStrategy(game));
-      //Robot robot2 = new Robot(game);
-      //robot2.setStrategy(new RandomStrategy(game));
+      Robot robot2 = new Robot(game);
+      robot2.setStrategy(new RandomStrategy(game));
       Robot expecti = new Robot(game);
       expecti.setStrategy(new Expectiminimax(expecti,3,game));
+
+
 
       game.addPlayer(expecti);
       game.addPlayer(robot);

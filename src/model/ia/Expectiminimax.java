@@ -65,7 +65,7 @@ public class Expectiminimax implements Strategy {
             buildGraph(pickNode, depthness-1);
             root.addChild(pickNode);
         }else{
-            for(IPut action : nextPlayer.getPlateau().actionsPossible(root.getState().getGame().getPick())) {
+            for(IPut action : nextPlayer.getPlateau().actionsPossible(root.getState().getPick())) {
                 State otherState = new State(this.game,nextPlayer);
                 action.setGrille(otherState.getSavesGrid().get(nextPlayer));
                 action.put();
@@ -74,28 +74,6 @@ public class Expectiminimax implements Strategy {
                 root.addChild(playerNode);
             }
         }
-        /*
-        for (int i=0; i<depthness;i++) {
-
-            for(Player other : this.game.getPlayers()){
-                if (other != player){
-                    for(IPut action : other.getPlateau().actionsPossible(root.getState().getGame().getPick())) {
-                        State otherState = new State(this.game,other);
-                        action.setGrille(otherState.getSavesGrid().get(player));
-                        //action.put();
-                        Node playerNode = new Node(otherState.getGame().getCurrentPlayer(), otherState);
-                        root.addChild(playerNode);
-                    }
-
-                }
-            }
-            State pickState = new State(this.game,null);
-            Node pickNode = new Node(null,pickState);
-            pickNode.setChance();
-            root.addChild(pickNode);
-            player=null;
-            root=pickNode;
-        }*/
     }
 
 
@@ -115,7 +93,7 @@ public class Expectiminimax implements Strategy {
             Node root = new Node(this.player, state);
             state.setCurrentPlayer(this.player);
             buildGraph(root, this.depth);
-            System.out.println(root);
+         //   System.out.println(root);
 
             float expecti = (this.calcul(root, this.depth));
 
@@ -133,7 +111,7 @@ public class Expectiminimax implements Strategy {
 
     @Override
     public String toString() {
-        return "Expectiminimax";
+        return "Expectiminimax depth: "+this.depth;
     }
 
 

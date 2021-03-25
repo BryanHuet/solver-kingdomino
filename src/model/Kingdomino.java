@@ -69,34 +69,41 @@ public class Kingdomino {
 // Boucle de jeu
     public void start(){
         System.out.println("Debut du jeu");
-        int n=1;
+        int tourNumber=1;
         while(! this.terminate){
-            System.out.println("=========================================== TOUR "+n+" ===========================================");
+            System.out.println("=========================================== TOUR "+tourNumber+" ===========================================");
             if (this.deck.getDominos().size()==0){
                 this.terminate = true;
             }
-            System.out.println("Tirage de la pioches");
-            try{
-                this.pick = this.deck.pick(this.players.size());
-            }catch (Exception e){
-                System.err.println(e.getMessage());
+            if(tourNumber!=1){
+                System.out.println("Tirage de la pioches");
+                try{
+                    this.pick = this.deck.pick(this.players.size());
+                }catch (Exception e){
+                    System.err.println(e.getMessage());
+                }
+                System.out.println(this.pick);
+                if(this.pick.isEmpty()){
+                    this.terminate=true;
+                }
             }
-            System.out.println(this.pick);
-
-            int i=1;
             for(Player p : this.players){
                 System.out.println();
-                System.out.println(i+"-------- TOUR du joueur : "+p+" --------");
+                System.out.println(p.getId()+"-------- TOUR du joueur : "+p+" --------");
+
+                double startTime = System.currentTimeMillis();
                 if(! p.play()){
                     return;
                 }
+                long endTime = System.currentTimeMillis();
+
                 this.pick.remove(p.getLastAction().getDomino());
                 p.getPlateau().afficheGrille();
                 System.out.println("Le score du joueur est :"+ p.getScore());
+                System.out.println("temps exe : " + ((endTime - startTime)/1000) + "s");
                 System.out.println();
-                i=i+1;
             }
-            n=n+1;
+            tourNumber=tourNumber+1;
         }
     }
 

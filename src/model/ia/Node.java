@@ -50,6 +50,11 @@ public class Node {
 
     public void setChance(){
         this.isChance=true;
+        try {
+            this.state.setPick(this.state.getDeck().pick(this.state.getGame().getPlayers().size()));
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override

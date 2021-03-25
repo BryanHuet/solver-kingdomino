@@ -149,7 +149,7 @@ public class Grille{
 
     public ArrayList<IPut> actionsPossible(ArrayList<Domino> dominos){
         ArrayList<IPut> coups = new ArrayList<>();
-        if(dominos.isEmpty()){
+        if(this.castle != null && dominos == null){
             return null;
         }
         for (int i = 0; i < this.getNbLigne(); i++) {

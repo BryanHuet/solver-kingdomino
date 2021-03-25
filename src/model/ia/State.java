@@ -6,6 +6,7 @@ import model.pieces.domino.Domino;
 import model.plateau.Deck;
 import model.plateau.Grille;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class State {
@@ -13,6 +14,7 @@ public class State {
     private Kingdomino game;
     private HashMap<Player, Grille> savesGrid;
     private Deck deck;
+    private ArrayList<Domino> pick;
     private Player currentPlayer;
 
     public State(Kingdomino game, Player player){
@@ -33,8 +35,16 @@ public class State {
         for (Domino d: game.getDeck().getDominos()) {
             this.deck.addDomino(d);
         }
+        this.pick=this.game.getPick();
 
+    }
 
+    public ArrayList<Domino> getPick() {
+        return pick;
+    }
+
+    public void setPick(ArrayList<Domino> pick) {
+        this.pick = pick;
     }
 
     public Player nextPlayer(){
