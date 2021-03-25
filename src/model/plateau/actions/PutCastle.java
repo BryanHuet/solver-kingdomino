@@ -1,6 +1,5 @@
 package model.plateau.actions;
 
-import model.pieces.cases.Case;
 import model.pieces.cases.Castle;
 import model.pieces.domino.Domino;
 import model.plateau.Grille;
@@ -29,12 +28,11 @@ public class PutCastle implements IPut {
         int indexY = position[1];
 
         if (isValid()) {
-            castle.setPosition(new int[] {indexX, indexY});
+            castle.setPosition(new int[]{indexX, indexY});
             grille.setCastle(castle); // set la case du Chateau + on garde en mémoire la chateau
-        }
-        else {
+        } else {
             System.out.println("Attention ! aucun château n'existait, un a été mis par défaut au milieu de la grille.");
-            position = new int[] { grille.getNbLigne() / 2, grille.getNbColonne() / 2};
+            position = new int[]{grille.getNbLigne() / 2, grille.getNbColonne() / 2};
             put();
         }
     }
@@ -42,21 +40,22 @@ public class PutCastle implements IPut {
     // Pas besoin de vérifier si un domino est présent, le chateau est la première pièce.
     @Override
     public boolean isValid() {
-        return !grille.isOutofBound(position[0],position[1]);
+        return !grille.isOutofBound(position[0], position[1]);
     }
 
     @Override
     public void setGrille(Grille grille) {
-        this.grille=grille;
+        this.grille = grille;
     }
 
     @Override
     public Domino getDomino() {
         return null;
     }
+
     @Override
-    public String toString(){
-        return this.castle.toString() +  " " +
+    public String toString() {
+        return this.castle.toString() + " " +
                 this.position[0] + " "
                 + this.position[1];
     }

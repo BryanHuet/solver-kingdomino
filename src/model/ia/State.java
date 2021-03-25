@@ -17,25 +17,25 @@ public class State {
     private ArrayList<Domino> pick;
     private Player currentPlayer;
 
-    public State(Kingdomino game, Player player){
-        this.game=game;
-        this.savesGrid =new HashMap<>();
-        this.deck = new Deck(game.getDeck().getSize(),true);
-        this.currentPlayer=player;
-        for (Player p: game.getPlayers()) {
+    public State(Kingdomino game, Player player) {
+        this.game = game;
+        this.savesGrid = new HashMap<>();
+        this.deck = new Deck(game.getDeck().getSize(), true);
+        this.currentPlayer = player;
+        for (Player p : game.getPlayers()) {
             Grille grille = new Grille(p.getPlateau().getNbLigne(), p.getPlateau().getNbColonne());
             for (int i = 0; i < p.getPlateau().getNbLigne(); i++) {
                 for (int j = 0; j < p.getPlateau().getNbColonne(); j++) {
                     grille.getGrille()[i][j] = p.getPlateau().getCase(new int[]{i, j});
                 }
             }
-            this.savesGrid.put(p,grille);
+            this.savesGrid.put(p, grille);
         }
 
-        for (Domino d: game.getDeck().getDominos()) {
+        for (Domino d : game.getDeck().getDominos()) {
             this.deck.addDomino(d);
         }
-        this.pick=this.game.getPick();
+        this.pick = this.game.getPick();
 
     }
 
@@ -47,16 +47,19 @@ public class State {
         this.pick = pick;
     }
 
-    public Player nextPlayer(){
-        int idNextPlayer = this.currentPlayer == null ? 0 : this.currentPlayer.getId()+1;
-        if(idNextPlayer>=this.game.getPlayers().size()){
+    public Player nextPlayer() {
+        int idNextPlayer = this.currentPlayer == null ? 0 : this.currentPlayer.getId() + 1;
+        if (idNextPlayer >= this.game.getPlayers().size()) {
             this.currentPlayer = null;
-        }else{
-            this.currentPlayer=this.game.getPlayers().get(idNextPlayer);
+        } else {
+            this.currentPlayer = this.game.getPlayers().get(idNextPlayer);
         }
         return this.currentPlayer;
     }
-    public Kingdomino getGame() { return game; }
+
+    public Kingdomino getGame() {
+        return game;
+    }
 
     public HashMap<Player, Grille> getSavesGrid() {
         return savesGrid;
@@ -75,8 +78,8 @@ public class State {
     }
 
     @Override
-    public boolean equals(Object object){
-        if (! (object instanceof State)){
+    public boolean equals(Object object) {
+        if (!(object instanceof State)) {
             return false;
         }
         return this.getCurrentPlayer() == ((State) object).getCurrentPlayer() && this.getSavesGrid() == ((State) object).getSavesGrid();

@@ -25,7 +25,7 @@ public class PutSkipped implements IPut {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[action skipped]";
     }
 }

@@ -5,15 +5,15 @@ import model.plateau.Grille;
 import model.plateau.Score;
 import model.plateau.actions.IPut;
 
-public abstract class AbstractPlayer implements Player{
+public abstract class AbstractPlayer implements Player {
 
     private int id;
     private Grille plateau;
     private Kingdomino game;
 
-    public AbstractPlayer(Kingdomino game){
-        this.game=game;
-        this.plateau = new Grille(5,5);
+    public AbstractPlayer(Kingdomino game) {
+        this.game = game;
+        this.plateau = new Grille(5, 5);
     }
 
     public int getId() {
@@ -42,7 +42,7 @@ public abstract class AbstractPlayer implements Player{
     }
 
     @Override
-    public boolean play() {
+    public boolean play() throws Exception {
         return false;
     }
 

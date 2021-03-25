@@ -14,25 +14,25 @@ public class Score {
         this.grille = grille;
     }
 
-    public static String getTheMostPaysage(Grille grille){
+    public static String getTheMostPaysage(Grille grille) {
         HashMap<String, Integer> paysageCounter = new HashMap<>();
         for (int i = 0; i < grille.getNbLigne(); i++) {
             for (int j = 0; j < grille.getNbColonne(); j++) {
-                paysageCounter.put(grille.getGrille()[i][j].getPaysage().getName(),0);
+                paysageCounter.put(grille.getGrille()[i][j].getPaysage().getName(), 0);
             }
         }
         for (int i = 0; i < grille.getNbLigne(); i++) {
             for (int j = 0; j < grille.getNbColonne(); j++) {
-                paysageCounter.put(grille.getGrille()[i][j].getPaysage().getName(),paysageCounter.get(grille.getGrille()[i][j].getPaysage().getName())+1);
+                paysageCounter.put(grille.getGrille()[i][j].getPaysage().getName(), paysageCounter.get(grille.getGrille()[i][j].getPaysage().getName()) + 1);
             }
         }
-        String most="null";
-        int plus=0;
+        String most = "null";
+        int plus = 0;
         for (Map.Entry<String, Integer> entry : paysageCounter.entrySet()) {
-            if(!entry.getKey().equals("vide")){
-                if(entry.getValue()>plus){
-                    plus=entry.getValue();
-                    most=entry.getKey();
+            if (!entry.getKey().equals("vide")) {
+                if (entry.getValue() > plus) {
+                    plus = entry.getValue();
+                    most = entry.getKey();
                 }
             }
         }
@@ -47,37 +47,36 @@ public class Score {
      * @param area La liste de cases composant une zone.
      * @return Score de la zone calculé récursivement.
      */
-    public int calculateAreaScore(int x, int y, ArrayList<Case> verifiedCases, ArrayList<Case> area)
-    {
-        Case c = grille.getCaseBis(x,y);
+    public int calculateAreaScore(int x, int y, ArrayList<Case> verifiedCases, ArrayList<Case> area) {
+        Case c = grille.getCaseBis(x, y);
         verifiedCases.add(c);
         area.add(c);
 
-        Case caseAbove  = (x > 0) ? grille.getCaseBis(x-1,y) : null;
+        Case caseAbove = (x > 0) ? grille.getCaseBis(x - 1, y) : null;
         if (caseAbove != null && !verifiedCases.contains(caseAbove)) {
             if (caseAbove.getPaysage().getName().equals(c.getPaysage().getName()))
                 calculateAreaScore(x - 1, y, verifiedCases, area);
         }
 
-        Case caseUnder = (x < grille.getNbLigne() - 1) ? grille.getCaseBis(x+1,y) : null;
+        Case caseUnder = (x < grille.getNbLigne() - 1) ? grille.getCaseBis(x + 1, y) : null;
         if (caseUnder != null && !verifiedCases.contains(caseUnder)) {
             if (caseUnder.getPaysage().getName().equals(c.getPaysage().getName()))
                 calculateAreaScore(x + 1, y, verifiedCases, area);
         }
 
-        Case caseLeft = (y > 0) ? grille.getCaseBis(x,y-1) : null;
+        Case caseLeft = (y > 0) ? grille.getCaseBis(x, y - 1) : null;
         if (caseLeft != null && !verifiedCases.contains(caseLeft)) {
             if (caseLeft.getPaysage().getName().equals(c.getPaysage().getName()))
                 calculateAreaScore(x, y - 1, verifiedCases, area);
         }
 
-        Case caseRight = (y < grille.getNbColonne()-1) ? grille.getCaseBis(x,y+1) : null;
+        Case caseRight = (y < grille.getNbColonne() - 1) ? grille.getCaseBis(x, y + 1) : null;
         if (caseRight != null && !verifiedCases.contains(caseRight)) {
             if (caseRight.getPaysage().getName().equals(c.getPaysage().getName()))
                 calculateAreaScore(x, y + 1, verifiedCases, area);
         }
 
-        int nbCrowns= 0;
+        int nbCrowns = 0;
         for (Case c0 : area)
             nbCrowns += c0.getPaysage().getNbCouronnes();
 
@@ -89,17 +88,16 @@ public class Score {
      * @param verifiedCases Liste de cases vérifiées.
      * @return On retourne la somme des scores.
      */
-    public int calculateVerifiedCases(ArrayList<Case> verifiedCases)
-    {
+    public int calculateVerifiedCases(ArrayList<Case> verifiedCases) {
         int score = 0;
-        if(grille == null){
+        if (grille == null) {
             return 0;
         }
         for (int i = 0; i < grille.getNbLigne(); i++)
             for (int j = 0; j < grille.getNbColonne(); j++) {
-                Case c = this.grille.getCaseBis(i,j);
+                Case c = this.grille.getCaseBis(i, j);
 
-                if (!c.getPaysage().getName().equals("castle") && !verifiedCases.contains(c))  {
+                if (!c.getPaysage().getName().equals("castle") && !verifiedCases.contains(c)) {
                     ArrayList<Case> area = new ArrayList<Case>();
                     score += calculateAreaScore(i, j, verifiedCases, area);
                 }
@@ -122,12 +120,12 @@ public class Score {
      */
     public boolean checkPointBonus() {
         boolean checker = true;
-        if(grille == null){
+        if (grille == null) {
             return false;
         }
         for (int i = 0; i < grille.getNbLigne(); i++) {
             for (int j = 0; j < grille.getNbColonne(); j++) {
-                if (grille.getCaseBis(i,j).isOccuped() == false) {
+                if (grille.getCaseBis(i, j).isOccuped() == false) {
                     checker = false;
                 }
             }

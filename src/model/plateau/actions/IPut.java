@@ -17,5 +17,6 @@ public interface IPut {
     public boolean isValid();
 
     void setGrille(Grille grille);
+
     Domino getDomino();
 }

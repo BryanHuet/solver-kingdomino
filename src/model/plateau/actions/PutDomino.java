@@ -157,7 +157,7 @@ public class PutDomino implements IPut {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.domino.toString() + " " +
                 this.orientation + " " + this.position[0] + " "
                 + this.position[1];

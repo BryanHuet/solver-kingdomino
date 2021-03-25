@@ -11,9 +11,9 @@ public class Node {
     private State state;
     private HashSet<Node> child;
     private int heuristic;
-    private boolean isChance=false;
+    private boolean isChance = false;
 
-    public Node(Player player, State state){
+    public Node(Player player, State state) {
         this.player = player;
         this.state = state;
         this.child = new HashSet<>();
@@ -40,7 +40,7 @@ public class Node {
         return score.calculateScore();
     }
 
-    public void addChild(Node child){
+    public void addChild(Node child) {
         this.child.add(child);
     }
 
@@ -48,27 +48,27 @@ public class Node {
         return isChance;
     }
 
-    public void setChance(){
-        this.isChance=true;
+    public void setChance() {
+        this.isChance = true;
         try {
             this.state.setPick(this.state.getDeck().pick(this.state.getGame().getPlayers().size()));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
     @Override
-    public boolean equals(Object object){
-        if(! (object instanceof Node)){
+    public boolean equals(Object object) {
+        if (!(object instanceof Node)) {
             return false;
         }
         return this.heuristic == ((Node) object).getHeuristic() && this.player == ((Node) object).getPlayer()
                 && this.state == ((Node) object).getState();
     }
 
-    public String toString(){
-        return "{"+
-                ""+ (this.getPlayer() == null ? "chance" : this.getPlayer().getId() ) +" | "+this.heuristic+ "->" +this.getChild()
+    public String toString() {
+        return "{" +
+                "" + (this.getPlayer() == null ? "chance" : this.getPlayer().getId()) + " | " + this.heuristic + "->" + this.getChild()
                 + "}";
 
     }

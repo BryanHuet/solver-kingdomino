@@ -4,7 +4,7 @@ import model.Kingdomino;
 import model.ia.*;
 import model.plateau.actions.IPut;
 
-public class Robot extends AbstractPlayer implements Player{
+public class Robot extends AbstractPlayer implements Player {
 
     private Strategy strategy;
     private IPut lastAction;
@@ -17,22 +17,21 @@ public class Robot extends AbstractPlayer implements Player{
         this.strategy = strategy;
     }
 
-    public boolean play(){
-        if(!(this.strategy == null)){
-            if( ! (this.getPlateau().actionsPossible(this.getGame().getPick()) == null)
-                    && this.getPlateau().actionsPossible(this.getGame().getPick()).size()>0){
+    public boolean play() throws Exception {
+        if (!(this.strategy == null)) {
+            if (!(this.getPlateau().actionsPossible(this.getGame().getPick()) == null)
+                    && this.getPlateau().actionsPossible(this.getGame().getPick()).size() > 0) {
                 IPut action = this.strategy.resolution(this.getPlateau().actionsPossible(this.getGame().getPick()));
                 this.lastAction = action;
                 getGame().move(action);
-                System.out.println("action choisi : "+action);
+                System.out.println("action choisi : " + action);
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{ // -> renvoyer une exception
-            System.out.println("Le robot n'a pas de statégie");
+        } else {
+            throw new Exception("Le robot n'a pas de statégie");
         }
-        return false;
     }
 
     @Override
@@ -41,7 +40,7 @@ public class Robot extends AbstractPlayer implements Player{
     }
 
     @Override
-    public String toString(){
-        return "Robot "+this.getId()+" utilisant une strategie "+this.strategy;
+    public String toString() {
+        return "Robot " + this.getId() + " utilisant une strategie " + this.strategy;
     }
 }

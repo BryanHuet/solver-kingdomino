@@ -4,17 +4,17 @@ import model.Kingdomino;
 import control.InputHuman;
 import model.plateau.actions.IPut;
 
-public class Human extends AbstractPlayer implements Player{
+public class Human extends AbstractPlayer implements Player {
 
     private IPut lastAction;
 
-    public Human(Kingdomino game){
+    public Human(Kingdomino game) {
         super(game);
     }
 
 
     //-> ne pas modifier des choses dans games
-    public boolean play(){
+    public boolean play() {
         IPut action = InputHuman.chooseAction(this);
         this.lastAction = action;
         getGame().move(action);
@@ -27,7 +27,7 @@ public class Human extends AbstractPlayer implements Player{
     }
 
     @Override
-    public String toString(){
-        return "Humain "+this.getId();
+    public String toString() {
+        return "Humain " + this.getId();
     }
 }

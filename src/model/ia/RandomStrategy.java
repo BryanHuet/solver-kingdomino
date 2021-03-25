@@ -10,7 +10,7 @@ public class RandomStrategy implements Strategy {
 
     private Kingdomino game;
 
-    public RandomStrategy(Kingdomino game){
+    public RandomStrategy(Kingdomino game) {
         this.game = game;
     }
 
@@ -22,7 +22,7 @@ public class RandomStrategy implements Strategy {
 
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Random";
     }
 }

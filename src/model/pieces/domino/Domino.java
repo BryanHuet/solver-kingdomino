@@ -39,7 +39,9 @@ public class Domino {
         return numeroDomino;
     }
 
-    public int[] getPosition() { return position; }
+    public int[] getPosition() {
+        return position;
+    }
 
     public boolean estPoser() {
         return estPoser;
@@ -57,11 +59,11 @@ public class Domino {
     }
 
     @Override
-    public String toString(){
-        return "[" +this.getExtremiteGauche().getPaysage().getName() + " "+
+    public String toString() {
+        return "[" + this.getExtremiteGauche().getPaysage().getName() + " " +
                 this.getExtremiteGauche().getPaysage().getNbCouronnes() +
                 "|" + this.getExtremiteDroite().getPaysage().getName() + " " +
-                 this.getExtremiteDroite().getPaysage().getNbCouronnes() +"]";
+                this.getExtremiteDroite().getPaysage().getNbCouronnes() + "]";
     }
 
 }
