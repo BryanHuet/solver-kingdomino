@@ -1,5 +1,5 @@
 # KingDomino
-    Chaque Joueur possède un Château et doit construire un beau paysage autour de son château parmi 4 dominos donnés à chaque tour, afin de compléter son royaume en essayant de faire les plus grandes zones possibles d'un même type, tout en empêchant ses adversaires de faire de même.
+    Chaque Joueur possède un Château et doit construire un beau paysage autour de son château parmi 4 dominos donnés à chaque tour, afin de compléter son royaume en essayant de        faire les plus grandes zones possibles d'un même type, tout en empêchant ses adversaires de faire de même.
 
 # Commandes ant :
     ant clean : Clean le projet. 
