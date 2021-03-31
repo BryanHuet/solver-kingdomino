@@ -22,7 +22,8 @@ public class Main {
 
 
         game.addPlayer(random);
-        game.addPlayer(random2);
+        game.addPlayer(expecti);
+        //game.addPlayer(random2);
         //game.addPlayer(human);
 
 
